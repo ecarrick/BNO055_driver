@@ -54,6 +54,8 @@
 *---------------------------------------------------------------------------*/
 #include "bno055.h"
 
+#define BNO_DEV_ID 0
+
 /*----------------------------------------------------------------------------*
  *  The following APIs are used for reading and writing of
  *	sensor data using I2C communication
@@ -274,7 +276,7 @@ s32 bno055_data_readout_template(void)
  *	Boot loader revision id
  *	Software revision id
  *-------------------------------------------------------------------------*/
-	comres = bno055_init(&bno055);
+	comres = bno055_init(BNO_DEV_ID, &bno055);
 
 /*	For initializing the BNO sensor it is required to the operation mode
 	of the sensor as NORMAL
@@ -284,7 +286,7 @@ s32 bno055_data_readout_template(void)
 	bit positions - 0 and 1*/
 	power_mode = BNO055_POWER_MODE_NORMAL;
 	/* set the power mode as NORMAL*/
-	comres += bno055_set_power_mode(power_mode);
+	comres += bno055_set_power_mode(BNO_DEV_ID, power_mode);
 /*----------------------------------------------------------------*
 ************************* END INITIALIZATION *************************
 *-----------------------------------------------------------------*/
@@ -318,28 +320,28 @@ s32 bno055_data_readout_template(void)
 		*0x06 - BNO055_OPERATION_MODE_MAGGYRO
 		*0x07 - BNO055_OPERATION_MODE_AMG
 		based on the user need configure the operation mode*/
-	comres += bno055_set_operation_mode(BNO055_OPERATION_MODE_AMG);
+	comres += bno055_set_operation_mode(BNO_DEV_ID, BNO055_OPERATION_MODE_AMG);
 /*	Raw accel X, Y and Z data can read from the register
 	page - page 0
 	register - 0x08 to 0x0D*/
-	comres += bno055_read_accel_x(&accel_datax);
-	comres += bno055_read_accel_y(&accel_datay);
-	comres += bno055_read_accel_z(&accel_dataz);
-	comres += bno055_read_accel_xyz(&accel_xyz);
+	comres += bno055_read_accel_x(BNO_DEV_ID, &accel_datax);
+	comres += bno055_read_accel_y(BNO_DEV_ID, &accel_datay);
+	comres += bno055_read_accel_z(BNO_DEV_ID, &accel_dataz);
+	comres += bno055_read_accel_xyz(BNO_DEV_ID, &accel_xyz);
 /*	Raw mag X, Y and Z data can read from the register
 	page - page 0
 	register - 0x0E to 0x13*/
-	comres += bno055_read_mag_x(&mag_datax);
-	comres += bno055_read_mag_y(&mag_datay);
-	comres += bno055_read_mag_z(&mag_dataz);
-	comres += bno055_read_mag_xyz(&mag_xyz);
+	comres += bno055_read_mag_x(BNO_DEV_ID, &mag_datax);
+	comres += bno055_read_mag_y(BNO_DEV_ID, &mag_datay);
+	comres += bno055_read_mag_z(BNO_DEV_ID, &mag_dataz);
+	comres += bno055_read_mag_xyz(BNO_DEV_ID, &mag_xyz);
 /*	Raw gyro X, Y and Z data can read from the register
 	page - page 0
 	register - 0x14 to 0x19*/
-	comres += bno055_read_gyro_x(&gyro_datax);
-	comres += bno055_read_gyro_y(&gyro_datay);
-	comres += bno055_read_gyro_z(&gyro_dataz);
-	comres += bno055_read_gyro_xyz(&gyro_xyz);
+	comres += bno055_read_gyro_x(BNO_DEV_ID, &gyro_datax);
+	comres += bno055_read_gyro_y(BNO_DEV_ID, &gyro_datay);
+	comres += bno055_read_gyro_z(BNO_DEV_ID, &gyro_dataz);
+	comres += bno055_read_gyro_xyz(BNO_DEV_ID, &gyro_xyz);
 
 /************************* END READ RAW SENSOR DATA****************/
 
@@ -358,96 +360,96 @@ s32 bno055_data_readout_template(void)
 		*0x0B - BNO055_OPERATION_MODE_NDOF_FMC_OFF
 		*0x0C - BNO055_OPERATION_MODE_NDOF
 		based on the user need configure the operation mode*/
-	comres += bno055_set_operation_mode(BNO055_OPERATION_MODE_NDOF);
+	comres += bno055_set_operation_mode(BNO_DEV_ID, BNO055_OPERATION_MODE_NDOF);
 /*	Raw Euler H, R and P data can read from the register
 	page - page 0
 	register - 0x1A to 0x1E */
-	comres += bno055_read_euler_h(&euler_data_h);
-	comres += bno055_read_euler_r(&euler_data_r);
-	comres += bno055_read_euler_p(&euler_data_p);
-	comres += bno055_read_euler_hrp(&euler_hrp);
+	comres += bno055_read_euler_h(BNO_DEV_ID, &euler_data_h);
+	comres += bno055_read_euler_r(BNO_DEV_ID, &euler_data_r);
+	comres += bno055_read_euler_p(BNO_DEV_ID, &euler_data_p);
+	comres += bno055_read_euler_hrp(BNO_DEV_ID, &euler_hrp);
 /*	Raw Quaternion W, X, Y and Z data can read from the register
 	page - page 0
 	register - 0x20 to 0x27 */
-	comres += bno055_read_quaternion_w(&quaternion_data_w);
-	comres += bno055_read_quaternion_x(&quaternion_data_x);
-	comres += bno055_read_quaternion_y(&quaternion_data_y);
-	comres += bno055_read_quaternion_z(&quaternion_data_z);
-	comres += bno055_read_quaternion_wxyz(&quaternion_wxyz);
+	comres += bno055_read_quaternion_w(BNO_DEV_ID, &quaternion_data_w);
+	comres += bno055_read_quaternion_x(BNO_DEV_ID, &quaternion_data_x);
+	comres += bno055_read_quaternion_y(BNO_DEV_ID, &quaternion_data_y);
+	comres += bno055_read_quaternion_z(BNO_DEV_ID, &quaternion_data_z);
+	comres += bno055_read_quaternion_wxyz(BNO_DEV_ID, &quaternion_wxyz);
 /*	Raw Linear accel X, Y and Z data can read from the register
 	page - page 0
 	register - 0x28 to 0x2D */
-	comres += bno055_read_linear_accel_x(&linear_accel_data_x);
-	comres += bno055_read_linear_accel_y(&linear_accel_data_y);
-	comres += bno055_read_linear_accel_z(&linear_accel_data_z);
-	comres += bno055_read_linear_accel_xyz(&linear_acce_xyz);
+	comres += bno055_read_linear_accel_x(BNO_DEV_ID, &linear_accel_data_x);
+	comres += bno055_read_linear_accel_y(BNO_DEV_ID, &linear_accel_data_y);
+	comres += bno055_read_linear_accel_z(BNO_DEV_ID, &linear_accel_data_z);
+	comres += bno055_read_linear_accel_xyz(BNO_DEV_ID, &linear_acce_xyz);
 /*	Raw Gravity sensor X, Y and Z data can read from the register
 	page - page 0
 	register - 0x2E to 0x33 */
-	comres += bno055_read_gravity_x(&gravity_data_x);
-	comres += bno055_read_gravity_y(&gravity_data_y);
-	comres += bno055_read_gravity_z(&gravity_data_z);
-	comres += bno055_read_gravity_xyz(&gravity_xyz);
+	comres += bno055_read_gravity_x(BNO_DEV_ID, &gravity_data_x);
+	comres += bno055_read_gravity_y(BNO_DEV_ID, &gravity_data_y);
+	comres += bno055_read_gravity_z(BNO_DEV_ID, &gravity_data_z);
+	comres += bno055_read_gravity_xyz(BNO_DEV_ID, &gravity_xyz);
 /************************* END READ RAW FUSION DATA  ************/
 
 /******************START READ CONVERTED SENSOR DATA****************/
 /*	API used to read accel data output as double  - m/s2 and mg
 	float functions also available in the BNO055 API */
-	comres += bno055_convert_double_accel_x_msq(&d_accel_datax);
-	comres += bno055_convert_double_accel_x_mg(&d_accel_datax);
-	comres += bno055_convert_double_accel_y_msq(&d_accel_datay);
-	comres += bno055_convert_double_accel_y_mg(&d_accel_datay);
-	comres += bno055_convert_double_accel_z_msq(&d_accel_dataz);
-	comres += bno055_convert_double_accel_z_mg(&d_accel_dataz);
-	comres += bno055_convert_double_accel_xyz_msq(&d_accel_xyz);
-	comres += bno055_convert_double_accel_xyz_mg(&d_accel_xyz);
+	comres += bno055_convert_double_accel_x_msq(BNO_DEV_ID, &d_accel_datax);
+	comres += bno055_convert_double_accel_x_mg(BNO_DEV_ID, &d_accel_datax);
+	comres += bno055_convert_double_accel_y_msq(BNO_DEV_ID, &d_accel_datay);
+	comres += bno055_convert_double_accel_y_mg(BNO_DEV_ID, &d_accel_datay);
+	comres += bno055_convert_double_accel_z_msq(BNO_DEV_ID, &d_accel_dataz);
+	comres += bno055_convert_double_accel_z_mg(BNO_DEV_ID, &d_accel_dataz);
+	comres += bno055_convert_double_accel_xyz_msq(BNO_DEV_ID, &d_accel_xyz);
+	comres += bno055_convert_double_accel_xyz_mg(BNO_DEV_ID, &d_accel_xyz);
 
 /*	API used to read mag data output as double  - uT(micro Tesla)
 	float functions also available in the BNO055 API */
-	comres += bno055_convert_double_mag_x_uT(&d_mag_datax);
-	comres += bno055_convert_double_mag_y_uT(&d_mag_datay);
-	comres += bno055_convert_double_mag_z_uT(&d_mag_dataz);
-	comres += bno055_convert_double_mag_xyz_uT(&d_mag_xyz);
+	comres += bno055_convert_double_mag_x_uT(BNO_DEV_ID, &d_mag_datax);
+	comres += bno055_convert_double_mag_y_uT(BNO_DEV_ID, &d_mag_datay);
+	comres += bno055_convert_double_mag_z_uT(BNO_DEV_ID, &d_mag_dataz);
+	comres += bno055_convert_double_mag_xyz_uT(BNO_DEV_ID, &d_mag_xyz);
 
 /*	API used to read gyro data output as double  - dps and rps
 	float functions also available in the BNO055 API */
-	comres += bno055_convert_double_gyro_x_dps(&d_gyro_datax);
-	comres += bno055_convert_double_gyro_y_dps(&d_gyro_datay);
-	comres += bno055_convert_double_gyro_z_dps(&d_gyro_dataz);
-	comres += bno055_convert_double_gyro_x_rps(&d_gyro_datax);
-	comres += bno055_convert_double_gyro_y_rps(&d_gyro_datay);
-	comres += bno055_convert_double_gyro_z_rps(&d_gyro_dataz);
-	comres += bno055_convert_double_gyro_xyz_dps(&d_gyro_xyz);
-	comres += bno055_convert_double_gyro_xyz_rps(&d_gyro_xyz);
+	comres += bno055_convert_double_gyro_x_dps(BNO_DEV_ID, &d_gyro_datax);
+	comres += bno055_convert_double_gyro_y_dps(BNO_DEV_ID, &d_gyro_datay);
+	comres += bno055_convert_double_gyro_z_dps(BNO_DEV_ID, &d_gyro_dataz);
+	comres += bno055_convert_double_gyro_x_rps(BNO_DEV_ID, &d_gyro_datax);
+	comres += bno055_convert_double_gyro_y_rps(BNO_DEV_ID, &d_gyro_datay);
+	comres += bno055_convert_double_gyro_z_rps(BNO_DEV_ID, &d_gyro_dataz);
+	comres += bno055_convert_double_gyro_xyz_dps(BNO_DEV_ID, &d_gyro_xyz);
+	comres += bno055_convert_double_gyro_xyz_rps(BNO_DEV_ID, &d_gyro_xyz);
 
 /*	API used to read Euler data output as double  - degree and radians
 	float functions also available in the BNO055 API */
-	comres += bno055_convert_double_euler_h_deg(&d_euler_data_h);
-	comres += bno055_convert_double_euler_r_deg(&d_euler_data_r);
-	comres += bno055_convert_double_euler_p_deg(&d_euler_data_p);
-	comres += bno055_convert_double_euler_h_rad(&d_euler_data_h);
-	comres += bno055_convert_double_euler_r_rad(&d_euler_data_r);
-	comres += bno055_convert_double_euler_p_rad(&d_euler_data_p);
-	comres += bno055_convert_double_euler_hpr_deg(&d_euler_hpr);
-	comres += bno055_convert_double_euler_hpr_rad(&d_euler_hpr);
+	comres += bno055_convert_double_euler_h_deg(BNO_DEV_ID, &d_euler_data_h);
+	comres += bno055_convert_double_euler_r_deg(BNO_DEV_ID, &d_euler_data_r);
+	comres += bno055_convert_double_euler_p_deg(BNO_DEV_ID, &d_euler_data_p);
+	comres += bno055_convert_double_euler_h_rad(BNO_DEV_ID, &d_euler_data_h);
+	comres += bno055_convert_double_euler_r_rad(BNO_DEV_ID, &d_euler_data_r);
+	comres += bno055_convert_double_euler_p_rad(BNO_DEV_ID, &d_euler_data_p);
+	comres += bno055_convert_double_euler_hpr_deg(BNO_DEV_ID, &d_euler_hpr);
+	comres += bno055_convert_double_euler_hpr_rad(BNO_DEV_ID, &d_euler_hpr);
 
 /*	API used to read Linear acceleration data output as m/s2
 	float functions also available in the BNO055 API */
-	comres += bno055_convert_double_linear_accel_x_msq(
+	comres += bno055_convert_double_linear_accel_x_msq(BNO_DEV_ID, 
 	&d_linear_accel_datax);
-	comres += bno055_convert_double_linear_accel_y_msq(
+	comres += bno055_convert_double_linear_accel_y_msq(BNO_DEV_ID, 
 	&d_linear_accel_datay);
-	comres += bno055_convert_double_linear_accel_z_msq(
+	comres += bno055_convert_double_linear_accel_z_msq(BNO_DEV_ID, 
 	&d_linear_accel_dataz);
-	comres += bno055_convert_double_linear_accel_xyz_msq(
+	comres += bno055_convert_double_linear_accel_xyz_msq(BNO_DEV_ID, 
 	&d_linear_accel_xyz);
 
 /*	API used to read Gravity sensor data output as m/s2
 	float functions also available in the BNO055 API */
-	comres += bno055_convert_gravity_double_x_msq(&d_gravity_data_x);
-	comres += bno055_convert_gravity_double_y_msq(&d_gravity_data_y);
-	comres += bno055_convert_gravity_double_z_msq(&d_gravity_data_z);
-	comres += bno055_convert_double_gravity_xyz_msq(&d_gravity_xyz);
+	comres += bno055_convert_gravity_double_x_msq(BNO_DEV_ID, &d_gravity_data_x);
+	comres += bno055_convert_gravity_double_y_msq(BNO_DEV_ID, &d_gravity_data_y);
+	comres += bno055_convert_gravity_double_z_msq(BNO_DEV_ID, &d_gravity_data_z);
+	comres += bno055_convert_double_gravity_xyz_msq(BNO_DEV_ID, &d_gravity_xyz);
 /*-----------------------------------------------------------------------*
 ************************* START DE-INITIALIZATION ***********************
 *-------------------------------------------------------------------------*/
@@ -459,7 +461,7 @@ s32 bno055_data_readout_template(void)
 	bit positions - 0 and 1*/
 	power_mode = BNO055_POWER_MODE_SUSPEND;
 	/* set the power mode as SUSPEND*/
-	comres += bno055_set_power_mode(power_mode);
+	comres += bno055_set_power_mode(BNO_DEV_ID, power_mode);
 
 /*---------------------------------------------------------------------*
 ************************* END DE-INITIALIZATION **********************
