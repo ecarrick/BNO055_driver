@@ -2,6 +2,7 @@
 CONTENTS OF THIS FILE
 =======================
 	* Introduction
+	* Fork Differentiation
 	* Version
 	* Integration details
 	* Driver files information
@@ -11,8 +12,13 @@ CONTENTS OF THIS FILE
 
 INTRODUCTION
 ===============
+	- This fork allows for multiple concurrent devices in a thread friendly manner.
 	- This package contains the Bosch Sensortec MEMS BNO055 sensor driver (sensor API)
 	- The sensor driver package includes bno055.h, bno055.c and bno055_support.c files
+	
+Fork Informaiton
+===============
+	In order to support multiple devices all function calls have been updated to support references to different devices. This approach has benefits over calling a separate function to change the device context in that if we are in a threaded environment you do not need to mutex lock the context switch, all device information is in memory - each thread can initialize each device by an ID that holds all references to the calls.
 
 VERSION
 =========
