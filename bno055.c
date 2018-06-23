@@ -85,7 +85,7 @@ static struct bno055_t *p_bno055[MAX_DEVICES];
  *	affect the reference value of the parameter
  *	(Better case don't change the reference value of the parameter)
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_init(struct bno055_t *bno055, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_init(u8 dev_id, struct bno055_t *bno055)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -172,8 +172,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_init(struct bno055_t *bno055, u8 dev_id)
  *
  *
 */
-BNO055_RETURN_FUNCTION_TYPE bno055_write_register(u8 addr_u8,
-u8 *data_u8, u8 len_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_write_register(u8 dev_id, u8 addr_u8,
+u8 *data_u8, u8 len_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -203,8 +203,8 @@ u8 *data_u8, u8 len_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_register(u8 addr_u8,
-u8 *data_u8, u8 len_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_register(u8 dev_id, u8 addr_u8,
+u8 *data_u8, u8 len_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -230,7 +230,7 @@ u8 *data_u8, u8 len_u8, u8 dev_id)
  *	@retval 0 -> BNO055_SUCCESS
  *	@retval 1 -> BNO055_ERROR
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_chip_id(u8 *chip_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_chip_id(u8 dev_id, u8 *chip_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -245,7 +245,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_chip_id(u8 *chip_id_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the chip id*/
@@ -272,7 +272,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_chip_id(u8 *chip_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_sw_rev_id(u16 *sw_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_sw_rev_id(u8 dev_id, u16 *sw_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -291,7 +291,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_sw_rev_id(u16 *sw_id_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value of software
@@ -329,7 +329,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_sw_rev_id(u16 *sw_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_page_id(u8 *page_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_page_id(u8 dev_id, u8 *page_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -369,7 +369,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_page_id(u8 *page_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_write_page_id(u8 page_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_write_page_id(u8 dev_id, u8 page_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -413,8 +413,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_write_page_id(u8 page_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_rev_id(
-u8 *accel_rev_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_rev_id(u8 dev_id, 
+u8 *accel_rev_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -429,7 +429,7 @@ u8 *accel_rev_id_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel revision id */
@@ -456,8 +456,8 @@ u8 *accel_rev_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_rev_id(
-u8 *mag_rev_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_rev_id(u8 dev_id, 
+u8 *mag_rev_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -472,7 +472,7 @@ u8 *mag_rev_id_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 			if ((stat_s8 == BNO055_SUCCESS) ||
 			(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 				/* Read the mag revision id */
@@ -501,8 +501,8 @@ u8 *mag_rev_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_rev_id(
-u8 *gyro_rev_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_rev_id(u8 dev_id, 
+u8 *gyro_rev_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -517,7 +517,7 @@ u8 *gyro_rev_id_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro revision id */
@@ -545,8 +545,8 @@ u8 *gyro_rev_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_bl_rev_id(
-u8 *bl_rev_id_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_bl_rev_id(u8 dev_id, 
+u8 *bl_rev_id_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -561,7 +561,7 @@ u8 *bl_rev_id_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the boot loader revision id */
@@ -593,7 +593,7 @@ u8 *bl_rev_id_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_x(s16 *accel_x_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_x(u8 dev_id, s16 *accel_x_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -611,7 +611,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_x(s16 *accel_x_s16, u8 dev_id)
 		} else {
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel x axis two byte value*/
@@ -652,7 +652,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_x(s16 *accel_x_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_y(s16 *accel_y_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_y(u8 dev_id, s16 *accel_y_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -672,7 +672,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_y(s16 *accel_y_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel y axis two byte value*/
@@ -713,7 +713,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_y(s16 *accel_y_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_z(s16 *accel_z_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_z(u8 dev_id, s16 *accel_z_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -733,7 +733,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_z(s16 *accel_z_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel z axis two byte value*/
@@ -777,8 +777,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_z(s16 *accel_z_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_xyz(
-struct bno055_accel_t *accel, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_xyz(u8 dev_id, 
+struct bno055_accel_t *accel)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -804,7 +804,7 @@ struct bno055_accel_t *accel, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -874,7 +874,7 @@ struct bno055_accel_t *accel, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_x(s16 *mag_x_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_x(u8 dev_id, s16 *mag_x_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -894,7 +894,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_x(s16 *mag_x_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/*Read the mag x two bytes of data */
@@ -935,7 +935,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_x(s16 *mag_x_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_y(s16 *mag_y_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_y(u8 dev_id, s16 *mag_y_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -955,7 +955,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_y(s16 *mag_y_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/*Read the mag y two bytes of data */
@@ -997,7 +997,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_y(s16 *mag_y_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_z(s16 *mag_z_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_z(u8 dev_id, s16 *mag_z_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1017,7 +1017,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_z(s16 *mag_z_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -1061,7 +1061,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_z(s16 *mag_z_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_xyz(struct bno055_mag_t *mag, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_xyz(u8 dev_id, struct bno055_mag_t *mag)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1087,7 +1087,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_xyz(struct bno055_mag_t *mag, u8 dev
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/*Read the six byte value of mag xyz*/
@@ -1157,7 +1157,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_xyz(struct bno055_mag_t *mag, u8 dev
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_x(s16 *gyro_x_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_x(u8 dev_id, s16 *gyro_x_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1173,7 +1173,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_x(s16 *gyro_x_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro 16 bit x value*/
@@ -1214,7 +1214,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_x(s16 *gyro_x_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_y(s16 *gyro_y_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_y(u8 dev_id, s16 *gyro_y_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1230,7 +1230,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_y(s16 *gyro_y_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of gyro y */
@@ -1266,7 +1266,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_y(s16 *gyro_y_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_z(s16 *gyro_z_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_z(u8 dev_id, s16 *gyro_z_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1282,7 +1282,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_z(s16 *gyro_z_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro z 16 bit value*/
@@ -1326,7 +1326,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_z(s16 *gyro_z_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_xyz(struct bno055_gyro_t *gyro, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_xyz(u8 dev_id, struct bno055_gyro_t *gyro)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1352,7 +1352,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_xyz(struct bno055_gyro_t *gyro, u8 
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the six bytes data of gyro xyz*/
@@ -1416,7 +1416,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_xyz(struct bno055_gyro_t *gyro, u8 
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_h(s16 *euler_h_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_h(u8 dev_id, s16 *euler_h_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1436,7 +1436,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_h(s16 *euler_h_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the eulre heading data*/
@@ -1473,7 +1473,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_h(s16 *euler_h_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_r(s16 *euler_r_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_r(u8 dev_id, s16 *euler_r_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1493,7 +1493,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_r(s16 *euler_r_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the Euler roll data*/
@@ -1531,7 +1531,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_r(s16 *euler_r_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_p(s16 *euler_p_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_p(u8 dev_id, s16 *euler_p_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1551,7 +1551,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_p(s16 *euler_p_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the Euler p data*/
@@ -1596,8 +1596,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_p(s16 *euler_p_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_hrp(
-struct bno055_euler_t *euler, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_euler_hrp(u8 dev_id, 
+struct bno055_euler_t *euler)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1623,7 +1623,7 @@ struct bno055_euler_t *euler, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the six byte of Euler hrp data*/
@@ -1688,8 +1688,8 @@ struct bno055_euler_t *euler, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_w(
-s16 *quaternion_w_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_w(u8 dev_id, 
+s16 *quaternion_w_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1709,7 +1709,7 @@ s16 *quaternion_w_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -1748,8 +1748,8 @@ s16 *quaternion_w_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_x(
-s16 *quaternion_x_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_x(u8 dev_id, 
+s16 *quaternion_x_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1769,7 +1769,7 @@ s16 *quaternion_x_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -1808,8 +1808,8 @@ s16 *quaternion_x_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_y(
-s16 *quaternion_y_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_y(u8 dev_id, 
+s16 *quaternion_y_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1829,7 +1829,7 @@ s16 *quaternion_y_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -1868,8 +1868,8 @@ s16 *quaternion_y_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_z(
-s16 *quaternion_z_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_z(u8 dev_id, 
+s16 *quaternion_z_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1889,7 +1889,7 @@ s16 *quaternion_z_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -1937,8 +1937,8 @@ s16 *quaternion_z_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_wxyz(
-struct bno055_quaternion_t *quaternion, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_quaternion_wxyz(u8 dev_id, 
+struct bno055_quaternion_t *quaternion)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -1967,7 +1967,7 @@ struct bno055_quaternion_t *quaternion, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the eight byte value
@@ -2046,8 +2046,8 @@ struct bno055_quaternion_t *quaternion, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_x(
-s16 *linear_accel_x_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_x(u8 dev_id, 
+s16 *linear_accel_x_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2067,7 +2067,7 @@ s16 *linear_accel_x_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -2104,8 +2104,8 @@ s16 *linear_accel_x_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_y(
-s16 *linear_accel_y_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_y(u8 dev_id, 
+s16 *linear_accel_y_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2125,7 +2125,7 @@ s16 *linear_accel_y_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -2162,8 +2162,8 @@ s16 *linear_accel_y_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_z(
-s16 *linear_accel_z_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_z(u8 dev_id, 
+s16 *linear_accel_z_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2183,7 +2183,7 @@ s16 *linear_accel_z_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -2226,8 +2226,8 @@ s16 *linear_accel_z_s16, u8 dev_id)
  *	@retval 0 -> BNO055_SUCCESS
  *	@retval 1 -> BNO055_ERROR
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_xyz(
-struct bno055_linear_accel_t *linear_accel, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_linear_accel_xyz(u8 dev_id, 
+struct bno055_linear_accel_t *linear_accel)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2253,7 +2253,7 @@ struct bno055_linear_accel_t *linear_accel, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the six byte value
@@ -2319,8 +2319,8 @@ struct bno055_linear_accel_t *linear_accel, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_x(
-s16 *gravity_x_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_x(u8 dev_id, 
+s16 *gravity_x_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2340,7 +2340,7 @@ s16 *gravity_x_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -2377,8 +2377,8 @@ s16 *gravity_x_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_y(
-s16 *gravity_y_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_y(u8 dev_id, 
+s16 *gravity_y_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2398,7 +2398,7 @@ s16 *gravity_y_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -2435,8 +2435,8 @@ s16 *gravity_y_s16, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_z(
-s16 *gravity_z_s16, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_z(u8 dev_id, 
+s16 *gravity_z_s16)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2456,7 +2456,7 @@ s16 *gravity_z_s16, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the two byte value
@@ -2500,8 +2500,8 @@ s16 *gravity_z_s16, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_xyz(
-struct bno055_gravity_t *gravity, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gravity_xyz(u8 dev_id, 
+struct bno055_gravity_t *gravity)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2527,7 +2527,7 @@ struct bno055_gravity_t *gravity, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the six byte value
@@ -2593,7 +2593,7 @@ struct bno055_gravity_t *gravity, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_temp_data(s8 *temp_s8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_temp_data(u8 dev_id, s8 *temp_s8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2608,7 +2608,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_temp_data(s8 *temp_s8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the raw temperature data */
@@ -2638,8 +2638,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_read_temp_data(s8 *temp_s8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_x_msq(
-float *accel_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_x_msq(u8 dev_id, 
+float *accel_x_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2649,17 +2649,17 @@ float *accel_x_f, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw x data*/
-			com_rslt += bno055_read_accel_x(&reg_accel_x_s16, dev_id);
+			com_rslt += bno055_read_accel_x(dev_id, &reg_accel_x_s16);
 			p_bno055[dev_id]->delay_msec(BNO055_GEN_READ_WRITE_LENGTH);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw accel x to m/s2*/
 				data_f =
-				(float)(reg_accel_x_s16/BNO055_ACCEL_DIV_MSQ, dev_id);
+				(float)(reg_accel_x_s16/BNO055_ACCEL_DIV_MSQ);
 				*accel_x_f = data_f;
 			} else {
 			com_rslt = BNO055_ERROR;
@@ -2684,8 +2684,8 @@ float *accel_x_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_x_mg(
-float *accel_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_x_mg(u8 dev_id, 
+float *accel_x_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2695,16 +2695,16 @@ float *accel_x_f, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw x data*/
-			com_rslt += bno055_read_accel_x(&reg_accel_x_s16, dev_id);
+			com_rslt += bno055_read_accel_x(dev_id, &reg_accel_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw accel x to m/s2*/
 				data_f =
-				(float)(reg_accel_x_s16/BNO055_ACCEL_DIV_MG, dev_id);
+				(float)(reg_accel_x_s16/BNO055_ACCEL_DIV_MG);
 				*accel_x_f = data_f;
 			} else {
 			com_rslt = BNO055_ERROR;
@@ -2728,8 +2728,8 @@ float *accel_x_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_y_msq(
-float *accel_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_y_msq(u8 dev_id, 
+float *accel_y_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2739,11 +2739,11 @@ float *accel_y_f, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
-			com_rslt += bno055_read_accel_y(&reg_accel_y_s16, dev_id);
+			com_rslt += bno055_read_accel_y(dev_id, &reg_accel_y_s16);
 			p_bno055[dev_id]->delay_msec(BNO055_GEN_READ_WRITE_LENGTH);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw accel y to m/s2*/
@@ -2771,8 +2771,8 @@ float *accel_y_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_y_mg(
-float *accel_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_y_mg(u8 dev_id, 
+float *accel_y_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2782,12 +2782,12 @@ float *accel_y_f, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw z data*/
-			com_rslt += bno055_read_accel_y(&reg_accel_y_s16, dev_id);
+			com_rslt += bno055_read_accel_y(dev_id, &reg_accel_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw accel z to mg*/
 				data = (float)(
@@ -2815,8 +2815,8 @@ float *accel_y_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_z_msq(
-float *accel_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_z_msq(u8 dev_id, 
+float *accel_z_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2826,12 +2826,12 @@ float *accel_z_f, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw z data*/
-			com_rslt += bno055_read_accel_z(&reg_accel_z_s16, dev_id);
+			com_rslt += bno055_read_accel_z(dev_id, &reg_accel_z_s16);
 			p_bno055[dev_id]->delay_msec(BNO055_GEN_READ_WRITE_LENGTH);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw accel z to m/s2*/
@@ -2860,8 +2860,8 @@ float *accel_z_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_z_mg(
-float *accel_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_z_mg(u8 dev_id, 
+float *accel_z_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2871,12 +2871,12 @@ float *accel_z_f, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2 */
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw z data*/
-			com_rslt += bno055_read_accel_z(&reg_accel_z_s16, dev_id);
+			com_rslt += bno055_read_accel_z(dev_id, &reg_accel_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw accel x to mg*/
 				data_f =
@@ -2908,8 +2908,8 @@ float *accel_z_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_xyz_msq(
-struct bno055_accel_float_t *accel_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_xyz_msq(u8 dev_id, 
+struct bno055_accel_float_t *accel_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2919,12 +2919,12 @@ struct bno055_accel_float_t *accel_xyz, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw xyz data*/
-			com_rslt += bno055_read_accel_xyz(&reg_accel_xyz, dev_id);
+			com_rslt += bno055_read_accel_xyz(dev_id, &reg_accel_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the accel raw xyz to meterpersecseq*/
 				accel_xyz->x =
@@ -2960,8 +2960,8 @@ struct bno055_accel_float_t *accel_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_xyz_mg(
-struct bno055_accel_float_t *accel_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_accel_xyz_mg(u8 dev_id, 
+struct bno055_accel_float_t *accel_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -2971,12 +2971,12 @@ struct bno055_accel_float_t *accel_xyz, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw y data*/
-			com_rslt += bno055_read_accel_xyz(&reg_accel_xyz, dev_id);
+			com_rslt += bno055_read_accel_xyz(dev_id, &reg_accel_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/*Convert the accel raw xyz to millig */
 				accel_xyz->x =
@@ -3007,8 +3007,8 @@ struct bno055_accel_float_t *accel_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_x_uT(
-float *mag_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_x_uT(u8 dev_id, 
+float *mag_x_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3016,7 +3016,7 @@ float *mag_x_f, u8 dev_id)
 	s16 reg_mag_x_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read raw mag x data */
-	com_rslt = bno055_read_mag_x(&reg_mag_x_s16, dev_id);
+	com_rslt = bno055_read_mag_x(dev_id, &reg_mag_x_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw mag x to microTesla*/
 		data_f = (float)(reg_mag_x_s16/BNO055_MAG_DIV_UT);
@@ -3039,8 +3039,8 @@ float *mag_x_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_y_uT(
-float *mag_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_y_uT(u8 dev_id, 
+float *mag_y_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3048,7 +3048,7 @@ float *mag_y_f, u8 dev_id)
 	s16 reg_mag_y_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read raw mag y data */
-	com_rslt = bno055_read_mag_y(&reg_mag_y_s16, dev_id);
+	com_rslt = bno055_read_mag_y(dev_id, &reg_mag_y_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw mag y to microTesla*/
 		data_f = (float)(reg_mag_y_s16/BNO055_MAG_DIV_UT);
@@ -3071,8 +3071,8 @@ float *mag_y_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_z_uT(
-float *mag_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_z_uT(u8 dev_id, 
+float *mag_z_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3080,7 +3080,7 @@ float *mag_z_f, u8 dev_id)
 	s16 reg_mag_z_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read raw mag z data */
-	com_rslt = bno055_read_mag_z(&reg_mag_z_s16, dev_id);
+	com_rslt = bno055_read_mag_z(dev_id, &reg_mag_z_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw mag z to microTesla*/
 		data_f = (float)(reg_mag_z_s16/BNO055_MAG_DIV_UT);
@@ -3108,8 +3108,8 @@ float *mag_z_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_xyz_uT(
-struct bno055_mag_float_t *mag_xyz_data, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_mag_xyz_uT(u8 dev_id, 
+struct bno055_mag_float_t *mag_xyz_data)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3117,7 +3117,7 @@ struct bno055_mag_float_t *mag_xyz_data, u8 dev_id)
 	struct bno055_mag_t mag_xyz = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* Read raw mag x data */
-	com_rslt = bno055_read_mag_xyz(&mag_xyz, dev_id);
+	com_rslt = bno055_read_mag_xyz(dev_id, &mag_xyz);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert mag raw xyz to microTesla*/
 		mag_xyz_data->x = (float)(mag_xyz.x/BNO055_MAG_DIV_UT);
@@ -3141,8 +3141,8 @@ struct bno055_mag_float_t *mag_xyz_data, u8 dev_id)
  *	@retval 0 -> BNO055_SUCCESS
  *	@retval 1 -> BNO055_ERROR
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_x_dps(
-float *gyro_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_x_dps(u8 dev_id, 
+float *gyro_x_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3152,16 +3152,16 @@ float *gyro_x_f, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_x(&reg_gyro_x_s16, dev_id);
+			com_rslt += bno055_read_gyro_x(dev_id, &reg_gyro_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro x to dps*/
 				data_f =
-				(float)(reg_gyro_x_s16/BNO055_GYRO_DIV_DPS, dev_id);
+				(float)(reg_gyro_x_s16/BNO055_GYRO_DIV_DPS);
 				*gyro_x_f = data_f;
 			} else {
 			com_rslt = BNO055_ERROR;
@@ -3184,8 +3184,8 @@ float *gyro_x_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_x_rps(
-float *gyro_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_x_rps(u8 dev_id, 
+float *gyro_x_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3195,12 +3195,12 @@ float *gyro_x_f, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_x(&reg_gyro_x_s16, dev_id);
+			com_rslt += bno055_read_gyro_x(dev_id, &reg_gyro_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro x to rps*/
 				data_f =
@@ -3227,8 +3227,8 @@ float *gyro_x_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_y_dps(
-float *gyro_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_y_dps(u8 dev_id, 
+float *gyro_y_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3238,12 +3238,12 @@ float *gyro_y_f, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw y data */
-			com_rslt += bno055_read_gyro_y(&reg_gyro_y_s16, dev_id);
+			com_rslt += bno055_read_gyro_y(dev_id, &reg_gyro_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro x to dps*/
 				data_f =
@@ -3271,8 +3271,8 @@ float *gyro_y_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_y_rps(
-float *gyro_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_y_rps(u8 dev_id, 
+float *gyro_y_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3282,12 +3282,12 @@ float *gyro_y_f, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw y data */
-			com_rslt += bno055_read_gyro_y(&reg_gyro_y_s16, dev_id);
+			com_rslt += bno055_read_gyro_y(dev_id, &reg_gyro_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro x to rps*/
 				data_f =
@@ -3314,8 +3314,8 @@ float *gyro_y_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_z_dps(
-float *gyro_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_z_dps(u8 dev_id, 
+float *gyro_z_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3325,12 +3325,12 @@ float *gyro_z_f, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw z data */
-			com_rslt += bno055_read_gyro_z(&reg_gyro_z_s16, dev_id);
+			com_rslt += bno055_read_gyro_z(dev_id, &reg_gyro_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro x to dps*/
 				data_f =
@@ -3357,8 +3357,8 @@ float *gyro_z_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_z_rps(
-float *gyro_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_z_rps(u8 dev_id, 
+float *gyro_z_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3368,12 +3368,12 @@ float *gyro_z_f, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_z(&reg_gyro_z_s16, dev_id);
+			com_rslt += bno055_read_gyro_z(dev_id, &reg_gyro_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro x to rps*/
 				data_f =
@@ -3406,8 +3406,8 @@ float *gyro_z_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_xyz_dps(
-struct bno055_gyro_float_t *gyro_xyz_data, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_xyz_dps(u8 dev_id, 
+struct bno055_gyro_float_t *gyro_xyz_data)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3417,12 +3417,12 @@ struct bno055_gyro_float_t *gyro_xyz_data, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw xyz data */
-			com_rslt += bno055_read_gyro_xyz(&gyro_xyz, dev_id);
+			com_rslt += bno055_read_gyro_xyz(dev_id, &gyro_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert gyro raw xyz to dps*/
 				gyro_xyz_data->x =
@@ -3458,8 +3458,8 @@ struct bno055_gyro_float_t *gyro_xyz_data, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_xyz_rps(
-struct bno055_gyro_float_t *gyro_xyz_data, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gyro_xyz_rps(u8 dev_id, 
+struct bno055_gyro_float_t *gyro_xyz_data)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3469,12 +3469,12 @@ struct bno055_gyro_float_t *gyro_xyz_data, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw xyz data */
-			com_rslt += bno055_read_gyro_xyz(&gyro_xyz, dev_id);
+			com_rslt += bno055_read_gyro_xyz(dev_id, &gyro_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert gyro raw xyz to rps*/
 				gyro_xyz_data->x =
@@ -3503,8 +3503,8 @@ struct bno055_gyro_float_t *gyro_xyz_data, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_h_deg(
-float *euler_h_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_h_deg(u8 dev_id, 
+float *euler_h_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3514,12 +3514,12 @@ float *euler_h_f, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read Euler raw h data*/
-			com_rslt += bno055_read_euler_h(&reg_euler_h_s16, dev_id);
+			com_rslt += bno055_read_euler_h(dev_id, &reg_euler_h_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler h data to degree*/
 				data_f =
@@ -3545,22 +3545,22 @@ float *euler_h_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_h_rad(
-float *euler_h_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_h_rad(u8 dev_id, 
+float *euler_h_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_h_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
 		/* Read the current Euler unit and set the
 		unit as radians if the unit is in degree */
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw h data*/
-			com_rslt += bno055_read_euler_h(&reg_euler_h_s16, dev_id);
+			com_rslt += bno055_read_euler_h(dev_id, &reg_euler_h_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler h data to degree*/
 				data_f =
@@ -3585,8 +3585,8 @@ float *euler_h_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_r_deg(
-float *euler_r_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_r_deg(u8 dev_id, 
+float *euler_r_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_r = BNO055_INIT_VALUE;
@@ -3594,12 +3594,12 @@ float *euler_r_f, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read Euler raw r data*/
-			com_rslt += bno055_read_euler_r(&reg_euler_r, dev_id);
+			com_rslt += bno055_read_euler_r(dev_id, &reg_euler_r);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler r data to degree*/
 				data_f = (float)(
@@ -3624,8 +3624,8 @@ float *euler_r_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_r_rad(
-float *euler_r_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_r_rad(u8 dev_id, 
+float *euler_r_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_r_f = BNO055_INIT_VALUE;
@@ -3633,12 +3633,12 @@ float *euler_r_f, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw r data*/
-			com_rslt += bno055_read_euler_r(&reg_euler_r_f, dev_id);
+			com_rslt += bno055_read_euler_r(dev_id, &reg_euler_r_f);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler r data to radians*/
 				data_f =
@@ -3663,8 +3663,8 @@ float *euler_r_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_p_deg(
-float *euler_p_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_p_deg(u8 dev_id, 
+float *euler_p_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_p_f = BNO055_INIT_VALUE;
@@ -3672,12 +3672,12 @@ float *euler_p_f, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read Euler raw p data*/
-			com_rslt += bno055_read_euler_p(&reg_euler_p_f, dev_id);
+			com_rslt += bno055_read_euler_p(dev_id, &reg_euler_p_f);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler p data to degree*/
 				data_f =
@@ -3703,8 +3703,8 @@ float *euler_p_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_p_rad(
-float *euler_p_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_p_rad(u8 dev_id, 
+float *euler_p_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_p_f = BNO055_INIT_VALUE;
@@ -3712,12 +3712,12 @@ float *euler_p_f, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw r data*/
-			com_rslt += bno055_read_euler_p(&reg_euler_p_f, dev_id);
+			com_rslt += bno055_read_euler_p(dev_id, &reg_euler_p_f);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler r data to radians*/
 				data_f =
@@ -3749,8 +3749,8 @@ float *euler_p_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_hpr_deg(
-struct bno055_euler_float_t *euler_hpr, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_hpr_deg(u8 dev_id, 
+struct bno055_euler_float_t *euler_hpr)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3760,12 +3760,12 @@ struct bno055_euler_float_t *euler_hpr, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw hrp data*/
-			com_rslt += bno055_read_euler_hrp(&reg_euler, dev_id);
+			com_rslt += bno055_read_euler_hrp(dev_id, &reg_euler);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler hrp to degree*/
 				euler_hpr->h =
@@ -3800,8 +3800,8 @@ struct bno055_euler_float_t *euler_hpr, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_hpr_rad(
-struct bno055_euler_float_t *euler_hpr, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_euler_hpr_rad(u8 dev_id, 
+struct bno055_euler_float_t *euler_hpr)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3811,12 +3811,12 @@ struct bno055_euler_float_t *euler_hpr, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw hrp data*/
-			com_rslt += bno055_read_euler_hrp(&reg_euler, dev_id);
+			com_rslt += bno055_read_euler_hrp(dev_id, &reg_euler);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw hrp to radians */
 				euler_hpr->h =
@@ -3843,8 +3843,8 @@ struct bno055_euler_float_t *euler_hpr, u8 dev_id)
  *	@retval 0 -> BNO055_SUCCESS
  *	@retval 1 -> BNO055_ERROR
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_x_msq(
-float *linear_accel_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_x_msq(u8 dev_id, 
+float *linear_accel_x_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3852,7 +3852,7 @@ float *linear_accel_x_f, u8 dev_id)
 	s16 reg_linear_accel_x_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read the raw x of linear accel */
-	com_rslt = bno055_read_linear_accel_x(&reg_linear_accel_x_s16, dev_id);
+	com_rslt = bno055_read_linear_accel_x(dev_id, &reg_linear_accel_x_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw linear accel x to m/s2*/
 		data_f =
@@ -3873,14 +3873,14 @@ float *linear_accel_x_f, u8 dev_id)
  *	@retval 0 -> BNO055_SUCCESS
  *	@retval 1 -> BNO055_ERROR
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_y_msq(
-float *linear_accel_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_y_msq(u8 dev_id, 
+float *linear_accel_y_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_linear_accel_y = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read the raw y of linear accel */
-	com_rslt = bno055_read_linear_accel_y(&reg_linear_accel_y, dev_id);
+	com_rslt = bno055_read_linear_accel_y(dev_id, &reg_linear_accel_y);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw linear accel x to m/s2*/
 		data_f = (float)
@@ -3902,14 +3902,14 @@ float *linear_accel_y_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_z_msq(
-float *linear_accel_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_z_msq(u8 dev_id, 
+float *linear_accel_z_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_linear_accel_z = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read the raw x of linear accel */
-	com_rslt = bno055_read_linear_accel_z(&reg_linear_accel_z, dev_id);
+	com_rslt = bno055_read_linear_accel_z(dev_id, &reg_linear_accel_z);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw linear accel z to m/s2*/
 		data_f = (float)
@@ -3939,8 +3939,8 @@ float *linear_accel_z_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_xyz_msq(
-struct bno055_linear_accel_float_t *linear_accel_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_linear_accel_xyz_msq(u8 dev_id, 
+struct bno055_linear_accel_float_t *linear_accel_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -3948,7 +3948,7 @@ struct bno055_linear_accel_float_t *linear_accel_xyz, u8 dev_id)
 	struct bno055_linear_accel_t reg_linear_accel = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* Read the raw x of linear accel */
-	com_rslt = bno055_read_linear_accel_xyz(&reg_linear_accel, dev_id);
+	com_rslt = bno055_read_linear_accel_xyz(dev_id, &reg_linear_accel);
 	if (com_rslt == BNO055_SUCCESS) {
 		linear_accel_xyz->x =
 		(float)(reg_linear_accel.x/BNO055_LINEAR_ACCEL_DIV_MSQ);
@@ -3973,14 +3973,14 @@ struct bno055_linear_accel_float_t *linear_accel_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_float_x_msq(
-float *gravity_x_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_float_x_msq(u8 dev_id, 
+float *gravity_x_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_gravity_x_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read raw gravity of x*/
-	com_rslt = bno055_read_gravity_x(&reg_gravity_x_s16, dev_id);
+	com_rslt = bno055_read_gravity_x(dev_id, &reg_gravity_x_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw gravity x to m/s2*/
 		data_f = (float)(reg_gravity_x_s16/BNO055_GRAVITY_DIV_MSQ);
@@ -4002,14 +4002,14 @@ float *gravity_x_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_float_y_msq(
-float *gravity_y_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_float_y_msq(u8 dev_id, 
+float *gravity_y_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_gravity_y_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read raw gravity of y*/
-	com_rslt = bno055_read_gravity_y(&reg_gravity_y_s16, dev_id);
+	com_rslt = bno055_read_gravity_y(dev_id, &reg_gravity_y_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw gravity y to m/s2*/
 		data_f = (float)(reg_gravity_y_s16/BNO055_GRAVITY_DIV_MSQ);
@@ -4030,14 +4030,14 @@ float *gravity_y_f, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_float_z_msq(
-float *gravity_z_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_float_z_msq(u8 dev_id, 
+float *gravity_z_f)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_gravity_z_s16 = BNO055_INIT_VALUE;
 	float data_f = BNO055_INIT_VALUE;
 	/* Read raw gravity of z */
-	com_rslt = bno055_read_gravity_z(&reg_gravity_z_s16, dev_id);
+	com_rslt = bno055_read_gravity_z(dev_id, &reg_gravity_z_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw gravity z to m/s2*/
 		data_f = (float)(reg_gravity_z_s16/BNO055_GRAVITY_DIV_MSQ);
@@ -4066,8 +4066,8 @@ float *gravity_z_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gravity_xyz_msq(
-struct bno055_gravity_float_t *gravity_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_gravity_xyz_msq(u8 dev_id, 
+struct bno055_gravity_float_t *gravity_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4075,7 +4075,7 @@ struct bno055_gravity_float_t *gravity_xyz, u8 dev_id)
 	struct bno055_gravity_t reg_gravity_xyz = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* Read raw gravity of xyz */
-	com_rslt = bno055_read_gravity_xyz(&reg_gravity_xyz, dev_id);
+	com_rslt = bno055_read_gravity_xyz(dev_id, &reg_gravity_xyz);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw gravity xyz to meterpersecseq */
 		gravity_xyz->x =
@@ -4101,8 +4101,8 @@ struct bno055_gravity_float_t *gravity_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_temp_fahrenheit(
-float *temp_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_temp_fahrenheit(u8 dev_id, 
+float *temp_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4112,12 +4112,12 @@ float *temp_f, u8 dev_id)
 	u8 temp_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current temperature unit and set the
 	unit as Fahrenheit if the unit is in Celsius */
-	com_rslt = bno055_get_temp_unit(&temp_unit_u8, dev_id);
+	com_rslt = bno055_get_temp_unit(dev_id, &temp_unit_u8);
 	if (temp_unit_u8 != BNO055_TEMP_UNIT_FAHRENHEIT)
-		com_rslt += bno055_set_temp_unit(BNO055_TEMP_UNIT_FAHRENHEIT, dev_id);
+		com_rslt += bno055_set_temp_unit(dev_id, BNO055_TEMP_UNIT_FAHRENHEIT);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the raw temperature data */
-			com_rslt += bno055_read_temp_data(&reg_temp_s8, dev_id);
+			com_rslt += bno055_read_temp_data(dev_id, &reg_temp_s8);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw temperature data to Fahrenheit*/
 				data_f = (float)
@@ -4144,8 +4144,8 @@ float *temp_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_temp_celsius(
-float *temp_f, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_float_temp_celsius(u8 dev_id, 
+float *temp_f)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4155,12 +4155,12 @@ float *temp_f, u8 dev_id)
 	u8 temp_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current temperature unit and set the
 	unit as Fahrenheit if the unit is in Celsius */
-	com_rslt = bno055_get_temp_unit(&temp_unit_u8, dev_id);
+	com_rslt = bno055_get_temp_unit(dev_id, &temp_unit_u8);
 	if (temp_unit_u8 != BNO055_TEMP_UNIT_CELSIUS)
-		com_rslt += bno055_set_temp_unit(BNO055_TEMP_UNIT_CELSIUS, dev_id);
+		com_rslt += bno055_set_temp_unit(dev_id, BNO055_TEMP_UNIT_CELSIUS);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read the raw temperature data */
-			com_rslt += bno055_read_temp_data(&reg_temp_s8, dev_id);
+			com_rslt += bno055_read_temp_data(dev_id, &reg_temp_s8);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw temperature data to Fahrenheit*/
 				data_f =
@@ -4190,8 +4190,8 @@ float *temp_f, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_x_msq(
-double *accel_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_x_msq(u8 dev_id, 
+double *accel_x_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4201,16 +4201,16 @@ double *accel_x_d, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw y data*/
-			com_rslt += bno055_read_accel_x(&reg_accel_x_s16, dev_id);
+			com_rslt += bno055_read_accel_x(dev_id, &reg_accel_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw x to m/s2 */
 				data_f =
-				(double)(reg_accel_x_s16/BNO055_ACCEL_DIV_MSQ, dev_id);
+				(double)(reg_accel_x_s16/BNO055_ACCEL_DIV_MSQ);
 				*accel_x_d = data_f;
 			} else {
 			com_rslt = BNO055_ERROR;
@@ -4235,8 +4235,8 @@ double *accel_x_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_x_mg(
-double *accel_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_x_mg(u8 dev_id, 
+double *accel_x_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4246,12 +4246,12 @@ double *accel_x_d, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw y data*/
-			com_rslt += bno055_read_accel_x(&reg_accel_x_s16, dev_id);
+			com_rslt += bno055_read_accel_x(dev_id, &reg_accel_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw x to mg */
 				data_f =
@@ -4280,8 +4280,8 @@ double *accel_x_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_y_msq(
-double *accel_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_y_msq(u8 dev_id, 
+double *accel_y_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4291,16 +4291,16 @@ double *accel_y_d, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw y data*/
-			com_rslt += bno055_read_accel_y(&reg_accel_y_s16, dev_id);
+			com_rslt += bno055_read_accel_y(dev_id, &reg_accel_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw x to m/s2 */
 				data_f =
-				(double)(reg_accel_y_s16/BNO055_ACCEL_DIV_MSQ, dev_id);
+				(double)(reg_accel_y_s16/BNO055_ACCEL_DIV_MSQ);
 				*accel_y_d = data_f;
 			} else {
 			com_rslt = BNO055_ERROR;
@@ -4324,8 +4324,8 @@ double *accel_y_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_y_mg(
-double *accel_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_y_mg(u8 dev_id, 
+double *accel_y_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4335,12 +4335,12 @@ double *accel_y_d, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw y data*/
-			com_rslt += bno055_read_accel_y(&reg_accel_y_s16, dev_id);
+			com_rslt += bno055_read_accel_y(dev_id, &reg_accel_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw y to mg */
 				data_d =
@@ -4366,8 +4366,8 @@ double *accel_y_d, u8 dev_id)
  *	@retval 0 -> BNO055_SUCCESS
  *	@retval 1 -> BNO055_ERROR
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_z_msq(
-double *accel_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_z_msq(u8 dev_id, 
+double *accel_z_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4377,12 +4377,12 @@ double *accel_z_d, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw z data*/
-			com_rslt += bno055_read_accel_z(&reg_accel_z_s16, dev_id);
+			com_rslt += bno055_read_accel_z(dev_id, &reg_accel_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw z to m/s2 */
 				data_d =
@@ -4409,8 +4409,8 @@ double *accel_z_d, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_z_mg(
-double *accel_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_z_mg(u8 dev_id, 
+double *accel_z_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4420,12 +4420,12 @@ double *accel_z_d, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as mg if the unit is in m/s2*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw z data*/
-			com_rslt += bno055_read_accel_z(&reg_accel_z_s16, dev_id);
+			com_rslt += bno055_read_accel_z(dev_id, &reg_accel_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw z to mg */
 				data_d =
@@ -4458,8 +4458,8 @@ double *accel_z_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_xyz_msq(
-struct bno055_accel_double_t *accel_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_xyz_msq(u8 dev_id, 
+struct bno055_accel_double_t *accel_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4469,12 +4469,12 @@ struct bno055_accel_double_t *accel_xyz, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MSQ)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MSQ, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MSQ);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw xyz data*/
-			com_rslt += bno055_read_accel_xyz(&reg_accel_xyz, dev_id);
+			com_rslt += bno055_read_accel_xyz(dev_id, &reg_accel_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw xyz to m/s2*/
 				accel_xyz->x =
@@ -4509,8 +4509,8 @@ struct bno055_accel_double_t *accel_xyz, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_xyz_mg(
-struct bno055_accel_double_t *accel_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_accel_xyz_mg(u8 dev_id, 
+struct bno055_accel_double_t *accel_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4520,12 +4520,12 @@ struct bno055_accel_double_t *accel_xyz, u8 dev_id)
 	u8 accel_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current accel unit and set the
 	unit as m/s2 if the unit is in mg*/
-	com_rslt = bno055_get_accel_unit(&accel_unit_u8, dev_id);
+	com_rslt = bno055_get_accel_unit(dev_id, &accel_unit_u8);
 	if (accel_unit_u8 != BNO055_ACCEL_UNIT_MG)
-		com_rslt += bno055_set_accel_unit(BNO055_ACCEL_UNIT_MG, dev_id);
+		com_rslt += bno055_set_accel_unit(dev_id, BNO055_ACCEL_UNIT_MG);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the accel raw xyz data*/
-			com_rslt += bno055_read_accel_xyz(&reg_accel_xyz, dev_id);
+			com_rslt += bno055_read_accel_xyz(dev_id, &reg_accel_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw xyz to mg*/
 				accel_xyz->x =
@@ -4557,8 +4557,8 @@ struct bno055_accel_double_t *accel_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_x_uT(
-double *mag_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_x_uT(u8 dev_id, 
+double *mag_x_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4566,7 +4566,7 @@ double *mag_x_d, u8 dev_id)
 	s16 reg_mag_x_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read raw mag x data */
-	com_rslt = bno055_read_mag_x(&reg_mag_x_s16, dev_id);
+	com_rslt = bno055_read_mag_x(dev_id, &reg_mag_x_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw mag x to microTesla */
 		data_d = (double)(reg_mag_x_s16/BNO055_MAG_DIV_UT);
@@ -4590,8 +4590,8 @@ double *mag_x_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_y_uT(
-double *mag_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_y_uT(u8 dev_id, 
+double *mag_y_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4599,7 +4599,7 @@ double *mag_y_d, u8 dev_id)
 	s16 reg_mag_y_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read raw mag y data */
-	com_rslt = bno055_read_mag_y(&reg_mag_y_s16, dev_id);
+	com_rslt = bno055_read_mag_y(dev_id, &reg_mag_y_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw mag y to microTesla */
 		data_d = (double)(reg_mag_y_s16/BNO055_MAG_DIV_UT);
@@ -4623,8 +4623,8 @@ double *mag_y_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_z_uT(
-double *mag_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_z_uT(u8 dev_id, 
+double *mag_z_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4632,7 +4632,7 @@ double *mag_z_d, u8 dev_id)
 	s16 reg_mag_z_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read raw mag x */
-	com_rslt = bno055_read_mag_z(&reg_mag_z_s16, dev_id);
+	com_rslt = bno055_read_mag_z(dev_id, &reg_mag_z_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw mag x to microTesla */
 		data_d = (double)(reg_mag_z_s16/BNO055_MAG_DIV_UT);
@@ -4660,8 +4660,8 @@ double *mag_z_d, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_xyz_uT(
-struct bno055_mag_double_t *mag_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_mag_xyz_uT(u8 dev_id, 
+struct bno055_mag_double_t *mag_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4669,7 +4669,7 @@ struct bno055_mag_double_t *mag_xyz, u8 dev_id)
 	struct bno055_mag_t reg_mag_xyz = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* Read raw mag xyz data */
-	com_rslt = bno055_read_mag_xyz(&reg_mag_xyz, dev_id);
+	com_rslt = bno055_read_mag_xyz(dev_id, &reg_mag_xyz);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw mag xyz to microTesla*/
 		mag_xyz->x =
@@ -4698,8 +4698,8 @@ struct bno055_mag_double_t *mag_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_x_dps(
-double *gyro_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_x_dps(u8 dev_id, 
+double *gyro_x_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4709,12 +4709,12 @@ double *gyro_x_d, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_x(&reg_gyro_x_s16, dev_id);
+			com_rslt += bno055_read_gyro_x(dev_id, &reg_gyro_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw gyro x to dps */
 				data_d =
@@ -4742,8 +4742,8 @@ double *gyro_x_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_x_rps(
-double *gyro_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_x_rps(u8 dev_id, 
+double *gyro_x_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4753,12 +4753,12 @@ double *gyro_x_d, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_x(&reg_gyro_x_s16, dev_id);
+			com_rslt += bno055_read_gyro_x(dev_id, &reg_gyro_x_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw gyro x to rps */
 				data_d =
@@ -4786,8 +4786,8 @@ double *gyro_x_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_y_dps(
-double *gyro_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_y_dps(u8 dev_id, 
+double *gyro_y_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4797,12 +4797,12 @@ double *gyro_y_d, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw y data */
-			com_rslt += bno055_read_gyro_y(&reg_gyro_y_s16, dev_id);
+			com_rslt += bno055_read_gyro_y(dev_id, &reg_gyro_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw gyro y to dps */
 				data_d =
@@ -4830,8 +4830,8 @@ double *gyro_y_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_y_rps(
-double *gyro_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_y_rps(u8 dev_id, 
+double *gyro_y_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4841,12 +4841,12 @@ double *gyro_y_d, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw y data */
-			com_rslt += bno055_read_gyro_y(&reg_gyro_y_s16, dev_id);
+			com_rslt += bno055_read_gyro_y(dev_id, &reg_gyro_y_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw gyro y to rps */
 				data_d =
@@ -4874,8 +4874,8 @@ double *gyro_y_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_z_dps(
-double *gyro_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_z_dps(u8 dev_id, 
+double *gyro_z_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4885,12 +4885,12 @@ double *gyro_z_d, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw z data */
-			com_rslt += bno055_read_gyro_z(&reg_gyro_z_s16, dev_id);
+			com_rslt += bno055_read_gyro_z(dev_id, &reg_gyro_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw gyro z to dps */
 				data_d =
@@ -4918,8 +4918,8 @@ double *gyro_z_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_z_rps(
-double *gyro_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_z_rps(u8 dev_id, 
+double *gyro_z_d)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4929,12 +4929,12 @@ double *gyro_z_d, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_z(&reg_gyro_z_s16, dev_id);
+			com_rslt += bno055_read_gyro_z(dev_id, &reg_gyro_z_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw gyro x to rps */
 				data_d =
@@ -4966,8 +4966,8 @@ double *gyro_z_d, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_xyz_dps(
-struct bno055_gyro_double_t *gyro_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_xyz_dps(u8 dev_id, 
+struct bno055_gyro_double_t *gyro_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -4977,12 +4977,12 @@ struct bno055_gyro_double_t *gyro_xyz, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as dps if the unit is in rps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_DPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_DPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_DPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw xyz data */
-			com_rslt += bno055_read_gyro_xyz(&reg_gyro_xyz, dev_id);
+			com_rslt += bno055_read_gyro_xyz(dev_id, &reg_gyro_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert gyro raw xyz to dps*/
 				gyro_xyz->x =
@@ -5017,8 +5017,8 @@ struct bno055_gyro_double_t *gyro_xyz, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_xyz_rps(
-struct bno055_gyro_double_t *gyro_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gyro_xyz_rps(u8 dev_id, 
+struct bno055_gyro_double_t *gyro_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5028,12 +5028,12 @@ struct bno055_gyro_double_t *gyro_xyz, u8 dev_id)
 	u8 gyro_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current gyro unit and set the
 	unit as rps if the unit is in dps */
-	com_rslt = bno055_get_gyro_unit(&gyro_unit_u8, dev_id);
+	com_rslt = bno055_get_gyro_unit(dev_id, &gyro_unit_u8);
 	if (gyro_unit_u8 != BNO055_GYRO_UNIT_RPS)
-		com_rslt += bno055_set_gyro_unit(BNO055_GYRO_UNIT_RPS, dev_id);
+		com_rslt += bno055_set_gyro_unit(dev_id, BNO055_GYRO_UNIT_RPS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read gyro raw x data */
-			com_rslt += bno055_read_gyro_xyz(&reg_gyro_xyz, dev_id);
+			com_rslt += bno055_read_gyro_xyz(dev_id, &reg_gyro_xyz);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert the raw gyro xyz to rps*/
 				gyro_xyz->x =
@@ -5062,8 +5062,8 @@ struct bno055_gyro_double_t *gyro_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_h_deg(
-double *euler_h_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_h_deg(u8 dev_id, 
+double *euler_h_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_h_s16 = BNO055_INIT_VALUE;
@@ -5071,12 +5071,12 @@ double *euler_h_d, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read Euler raw h data*/
-			com_rslt += bno055_read_euler_h(&reg_euler_h_s16, dev_id);
+			com_rslt += bno055_read_euler_h(dev_id, &reg_euler_h_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler h to degree */
 				data_d =
@@ -5102,8 +5102,8 @@ double *euler_h_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_h_rad(
-double *euler_h_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_h_rad(u8 dev_id, 
+double *euler_h_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_h_s16 = BNO055_INIT_VALUE;
@@ -5111,12 +5111,12 @@ double *euler_h_d, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw h data*/
-			com_rslt += bno055_read_euler_h(&reg_euler_h_s16, dev_id);
+			com_rslt += bno055_read_euler_h(dev_id, &reg_euler_h_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler h to radians */
 				data_d =
@@ -5142,8 +5142,8 @@ double *euler_h_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_r_deg(
-double *euler_r_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_r_deg(u8 dev_id, 
+double *euler_r_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_r_s16 = BNO055_INIT_VALUE;
@@ -5151,12 +5151,12 @@ double *euler_r_d, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read Euler raw r data*/
-			com_rslt += bno055_read_euler_r(&reg_euler_r_s16, dev_id);
+			com_rslt += bno055_read_euler_r(dev_id, &reg_euler_r_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler r to degree */
 				data_d =
@@ -5182,8 +5182,8 @@ double *euler_r_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_r_rad(
-double *euler_r_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_r_rad(u8 dev_id, 
+double *euler_r_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_r_s16 = BNO055_INIT_VALUE;
@@ -5191,12 +5191,12 @@ double *euler_r_d, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw r data*/
-			com_rslt += bno055_read_euler_r(&reg_euler_r_s16, dev_id);
+			com_rslt += bno055_read_euler_r(dev_id, &reg_euler_r_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler r to radians */
 				data_d =
@@ -5222,8 +5222,8 @@ double *euler_r_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_p_deg(
-double *euler_p_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_p_deg(u8 dev_id, 
+double *euler_p_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_p_s16 = BNO055_INIT_VALUE;
@@ -5231,12 +5231,12 @@ double *euler_p_d, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 		if (com_rslt ==  BNO055_SUCCESS) {
 			/* Read Euler raw p data*/
-			com_rslt += bno055_read_euler_p(&reg_euler_p_s16, dev_id);
+			com_rslt += bno055_read_euler_p(dev_id, &reg_euler_p_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler p to degree*/
 				data_d =
@@ -5263,8 +5263,8 @@ double *euler_p_d, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_p_rad(
-double *euler_p_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_p_rad(u8 dev_id, 
+double *euler_p_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_euler_p_s16 = BNO055_INIT_VALUE;
@@ -5272,12 +5272,12 @@ double *euler_p_d, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read Euler raw p data*/
-			com_rslt += bno055_read_euler_p(&reg_euler_p_s16, dev_id);
+			com_rslt += bno055_read_euler_p(dev_id, &reg_euler_p_s16);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw p to radians*/
 				data_d =
@@ -5310,8 +5310,8 @@ double *euler_p_d, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_hpr_deg(
-struct bno055_euler_double_t *euler_hpr, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_hpr_deg(u8 dev_id, 
+struct bno055_euler_double_t *euler_hpr)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5321,12 +5321,12 @@ struct bno055_euler_double_t *euler_hpr, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as degree if the unit is in radians */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_DEG)
-		com_rslt += bno055_set_euler_unit(BNO055_EULER_UNIT_DEG, dev_id);
+		com_rslt += bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_DEG);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Read Euler raw h data*/
-			com_rslt += bno055_read_euler_hrp(&reg_euler, dev_id);
+			com_rslt += bno055_read_euler_hrp(dev_id, &reg_euler);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Convert raw Euler hrp to degree*/
 			euler_hpr->h =
@@ -5362,8 +5362,8 @@ struct bno055_euler_double_t *euler_hpr, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_hpr_rad(
-struct bno055_euler_double_t *euler_hpr, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_euler_hpr_rad(u8 dev_id, 
+struct bno055_euler_double_t *euler_hpr)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5373,12 +5373,12 @@ struct bno055_euler_double_t *euler_hpr, u8 dev_id)
 	u8 euler_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current Euler unit and set the
 	unit as radians if the unit is in degree */
-	com_rslt = bno055_get_euler_unit(&euler_unit_u8, dev_id);
+	com_rslt = bno055_get_euler_unit(dev_id, &euler_unit_u8);
 	if (euler_unit_u8 != BNO055_EULER_UNIT_RAD)
-		com_rslt = bno055_set_euler_unit(BNO055_EULER_UNIT_RAD, dev_id);
+		com_rslt = bno055_set_euler_unit(dev_id, BNO055_EULER_UNIT_RAD);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the raw hrp */
-			com_rslt = bno055_read_euler_hrp(&reg_euler, dev_id);
+			com_rslt = bno055_read_euler_hrp(dev_id, &reg_euler);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw Euler hrp to radians*/
 				euler_hpr->h =
@@ -5409,14 +5409,14 @@ struct bno055_euler_double_t *euler_hpr, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_x_msq(
-double *linear_accel_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_x_msq(u8 dev_id, 
+double *linear_accel_x_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_linear_accel_x_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read the raw x of linear accel */
-	com_rslt = bno055_read_linear_accel_x(&reg_linear_accel_x_s16, dev_id);
+	com_rslt = bno055_read_linear_accel_x(dev_id, &reg_linear_accel_x_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw x to m/s2 */
 		data_d = (double)
@@ -5441,14 +5441,14 @@ double *linear_accel_x_d, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_y_msq(
-double *linear_accel_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_y_msq(u8 dev_id, 
+double *linear_accel_y_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_linear_accel_y_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read the raw x of linear accel */
-	com_rslt = bno055_read_linear_accel_y(&reg_linear_accel_y_s16, dev_id);
+	com_rslt = bno055_read_linear_accel_y(dev_id, &reg_linear_accel_y_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw y to m/s2 */
 		data_d = (double)
@@ -5473,14 +5473,14 @@ double *linear_accel_y_d, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_z_msq(
-double *linear_accel_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_z_msq(u8 dev_id, 
+double *linear_accel_z_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_linear_accel_z_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read the raw x of linear accel */
-	com_rslt = bno055_read_linear_accel_z(&reg_linear_accel_z_s16, dev_id);
+	com_rslt = bno055_read_linear_accel_z(dev_id, &reg_linear_accel_z_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw z to m/s2 */
 		data_d =
@@ -5510,8 +5510,8 @@ double *linear_accel_z_d, u8 dev_id)
  *
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_xyz_msq(
-struct bno055_linear_accel_double_t *linear_accel_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_linear_accel_xyz_msq(u8 dev_id, 
+struct bno055_linear_accel_double_t *linear_accel_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5519,7 +5519,7 @@ struct bno055_linear_accel_double_t *linear_accel_xyz, u8 dev_id)
 	struct bno055_linear_accel_t reg_linear_accel_xyz = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* Read the raw xyz of linear accel */
-	com_rslt = bno055_read_linear_accel_xyz(&reg_linear_accel_xyz, dev_id);
+	com_rslt = bno055_read_linear_accel_xyz(dev_id, &reg_linear_accel_xyz);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert the raw xyz of linear accel to m/s2 */
 		linear_accel_xyz->x =
@@ -5545,14 +5545,14 @@ struct bno055_linear_accel_double_t *linear_accel_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_double_x_msq(
-double *gravity_x_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_double_x_msq(u8 dev_id, 
+double *gravity_x_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_gravity_x_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read raw gravity of x*/
-	com_rslt = bno055_read_gravity_x(&reg_gravity_x_s16, dev_id);
+	com_rslt = bno055_read_gravity_x(dev_id, &reg_gravity_x_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw gravity of x to m/s2 */
 		data_d =
@@ -5575,14 +5575,14 @@ double *gravity_x_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_double_y_msq(
-double *gravity_y_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_double_y_msq(u8 dev_id, 
+double *gravity_y_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_gravity_y_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read raw gravity of y */
-	com_rslt = bno055_read_gravity_y(&reg_gravity_y_s16, dev_id);
+	com_rslt = bno055_read_gravity_y(dev_id, &reg_gravity_y_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* convert raw gravity of y to m/s2 */
 		data_d =
@@ -5605,14 +5605,14 @@ double *gravity_y_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_double_z_msq(
-double *gravity_z_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_gravity_double_z_msq(u8 dev_id, 
+double *gravity_z_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s16 reg_gravity_z_s16 = BNO055_INIT_VALUE;
 	double data_d = BNO055_INIT_VALUE;
 	/* Read raw gravity of z */
-	com_rslt = bno055_read_gravity_z(&reg_gravity_z_s16, dev_id);
+	com_rslt = bno055_read_gravity_z(dev_id, &reg_gravity_z_s16);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw gravity of z to m/s2 */
 		data_d =
@@ -5641,8 +5641,8 @@ double *gravity_z_d, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gravity_xyz_msq(
-struct bno055_gravity_double_t *gravity_xyz, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_gravity_xyz_msq(u8 dev_id, 
+struct bno055_gravity_double_t *gravity_xyz)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5650,7 +5650,7 @@ struct bno055_gravity_double_t *gravity_xyz, u8 dev_id)
 	struct bno055_gravity_t reg_gravity_xyz = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* Read raw gravity of xyz */
-	com_rslt = bno055_read_gravity_xyz(&reg_gravity_xyz, dev_id);
+	com_rslt = bno055_read_gravity_xyz(dev_id, &reg_gravity_xyz);
 	if (com_rslt == BNO055_SUCCESS) {
 		/* Convert raw gravity of xyz to m/s2 */
 		gravity_xyz->x =
@@ -5676,8 +5676,8 @@ struct bno055_gravity_double_t *gravity_xyz, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_temp_fahrenheit(
-double *temp_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_temp_fahrenheit(u8 dev_id, 
+double *temp_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s8 reg_temp_s8 = BNO055_INIT_VALUE;
@@ -5685,12 +5685,12 @@ double *temp_d, u8 dev_id)
 	u8 temp_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current temperature unit and set the
 	unit as Fahrenheit if the unit is in Celsius */
-	com_rslt = bno055_get_temp_unit(&temp_unit_u8, dev_id);
+	com_rslt = bno055_get_temp_unit(dev_id, &temp_unit_u8);
 	if (temp_unit_u8 != BNO055_TEMP_UNIT_FAHRENHEIT)
-		com_rslt += bno055_set_temp_unit(BNO055_TEMP_UNIT_FAHRENHEIT, dev_id);
+		com_rslt += bno055_set_temp_unit(dev_id, BNO055_TEMP_UNIT_FAHRENHEIT);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the raw temperature data */
-			com_rslt += bno055_read_temp_data(&reg_temp_s8, dev_id);
+			com_rslt += bno055_read_temp_data(dev_id, &reg_temp_s8);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw temperature data to Fahrenheit*/
 				data_d = (double)(reg_temp_s8/
@@ -5716,8 +5716,8 @@ double *temp_d, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_temp_celsius(
-double *temp_d, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_convert_double_temp_celsius(u8 dev_id, 
+double *temp_d)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	s8 reg_temp_s8 = BNO055_INIT_VALUE;
@@ -5725,12 +5725,12 @@ double *temp_d, u8 dev_id)
 	u8 temp_unit_u8 = BNO055_INIT_VALUE;
 	/* Read the current temperature unit and set the
 	unit as Fahrenheit if the unit is in Celsius */
-	com_rslt = bno055_get_temp_unit(&temp_unit_u8, dev_id);
+	com_rslt = bno055_get_temp_unit(dev_id, &temp_unit_u8);
 	if (temp_unit_u8 != BNO055_TEMP_UNIT_CELSIUS)
-		com_rslt += bno055_set_temp_unit(BNO055_TEMP_UNIT_CELSIUS, dev_id);
+		com_rslt += bno055_set_temp_unit(dev_id, BNO055_TEMP_UNIT_CELSIUS);
 		if (com_rslt == BNO055_SUCCESS) {
 			/* Read the raw temperature data */
-			com_rslt += bno055_read_temp_data(&reg_temp_s8, dev_id);
+			com_rslt += bno055_read_temp_data(dev_id, &reg_temp_s8);
 			if (com_rslt == BNO055_SUCCESS) {
 				/* Convert raw temperature data to Fahrenheit*/
 				data_d =
@@ -5757,8 +5757,8 @@ double *temp_d, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_calib_stat(
-u8 *mag_calib_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_calib_stat(u8 dev_id, 
+u8 *mag_calib_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5773,7 +5773,7 @@ u8 *mag_calib_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the mag calib stat_s8 */
@@ -5802,8 +5802,8 @@ u8 *mag_calib_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_calib_stat(
-u8 *accel_calib_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_calib_stat(u8 dev_id, 
+u8 *accel_calib_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5818,7 +5818,7 @@ u8 *accel_calib_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel calib stat_s8 */
@@ -5847,8 +5847,8 @@ u8 *accel_calib_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_calib_stat(
-u8 *gyro_calib_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_calib_stat(u8 dev_id, 
+u8 *gyro_calib_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5863,7 +5863,7 @@ u8 *gyro_calib_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro calib status */
@@ -5892,8 +5892,8 @@ u8 *gyro_calib_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_calib_stat(
-u8 *sys_calib_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_calib_stat(u8 dev_id, 
+u8 *sys_calib_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5908,7 +5908,7 @@ u8 *sys_calib_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the system calib */
@@ -5940,8 +5940,8 @@ u8 *sys_calib_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_accel(
-u8 *selftest_accel_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_accel(u8 dev_id, 
+u8 *selftest_accel_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -5956,7 +5956,7 @@ u8 *selftest_accel_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel self test */
@@ -5989,8 +5989,8 @@ u8 *selftest_accel_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_mag(
-u8 *selftest_mag_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_mag(u8 dev_id, 
+u8 *selftest_mag_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6005,7 +6005,7 @@ u8 *selftest_mag_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the mag self test */
@@ -6037,8 +6037,8 @@ u8 *selftest_mag_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_gyro(
-u8 *selftest_gyro_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_gyro(u8 dev_id, 
+u8 *selftest_gyro_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6053,7 +6053,7 @@ u8 *selftest_gyro_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro self test */
@@ -6085,8 +6085,8 @@ u8 *selftest_gyro_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_mcu(
-u8 *selftest_mcu_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest_mcu(u8 dev_id, 
+u8 *selftest_mcu_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6101,7 +6101,7 @@ u8 *selftest_mcu_u8, u8 dev_id)
 		is available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the self test of micro controller*/
@@ -6140,8 +6140,8 @@ u8 *selftest_mcu_u8, u8 dev_id)
  *	bno055_set_intr_gyro_any_motion()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_gyro_any_motion(
-u8 *gyro_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_gyro_any_motion(u8 dev_id, 
+u8 *gyro_any_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6156,7 +6156,7 @@ u8 *gyro_any_motion_u8, u8 dev_id)
 		status is available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro anymotion interrupt stat_s8*/
@@ -6195,8 +6195,8 @@ u8 *gyro_any_motion_u8, u8 dev_id)
  *
  *	bno055_set_intr_gyro_highrate()
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_gyro_highrate(
-u8 *gyro_highrate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_gyro_highrate(u8 dev_id, 
+u8 *gyro_highrate_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6211,7 +6211,7 @@ u8 *gyro_highrate_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro highrate interrupt stat_s8*/
@@ -6251,8 +6251,8 @@ u8 *gyro_highrate_u8, u8 dev_id)
  *	bno055_set_intr_accel_high_g()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_accel_high_g(
-u8 *accel_high_g_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_accel_high_g(u8 dev_id, 
+u8 *accel_high_g_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6267,7 +6267,7 @@ u8 *accel_high_g_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel highg interrupt stat_s8 */
@@ -6306,8 +6306,8 @@ u8 *accel_high_g_u8, u8 dev_id)
  *
  *	bno055_set_intr_accel_any_motion()
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_accel_any_motion(
-u8 *accel_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_accel_any_motion(u8 dev_id, 
+u8 *accel_any_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6322,7 +6322,7 @@ u8 *accel_any_motion_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel anymotion interrupt stat_s8 */
@@ -6362,8 +6362,8 @@ u8 *accel_any_motion_u8, u8 dev_id)
  *
  *	bno055_set_intr_accel_nomotion()
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_accel_no_motion(
-u8 *accel_no_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_stat_accel_no_motion(u8 dev_id, 
+u8 *accel_no_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6379,7 +6379,7 @@ u8 *accel_no_motion_u8, u8 dev_id)
 		is available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the stat_s8 of accel
@@ -6409,8 +6409,8 @@ u8 *accel_no_motion_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_stat_main_clk(
-u8 *stat_main_clk_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_stat_main_clk(u8 dev_id, 
+u8 *stat_main_clk_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6425,7 +6425,7 @@ u8 *stat_main_clk_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the status of main clk */
@@ -6453,8 +6453,8 @@ u8 *stat_main_clk_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_stat_code(
-u8 *sys_stat_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_stat_code(u8 dev_id, 
+u8 *sys_stat_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6469,7 +6469,7 @@ u8 *sys_stat_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the the status of system*/
@@ -6499,8 +6499,8 @@ u8 *sys_stat_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_error_code(
-u8 *sys_error_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_error_code(u8 dev_id, 
+u8 *sys_error_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6515,7 +6515,7 @@ u8 *sys_error_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the system BNO055_ERROR code*/
@@ -6548,8 +6548,8 @@ u8 *sys_error_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_unit(
-u8 *accel_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_unit(u8 dev_id, 
+u8 *accel_unit_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6564,7 +6564,7 @@ u8 *accel_unit_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the accel unit */
@@ -6597,8 +6597,8 @@ u8 *accel_unit_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_unit(
-u8 accel_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_unit(u8 dev_id, 
+u8 accel_unit_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -6611,11 +6611,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8, dev_id);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG, dev_id);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the accel unit */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -6625,7 +6625,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 				if (com_rslt == BNO055_SUCCESS) {
 					data_u8r =
 					BNO055_SET_BITSLICE(data_u8r,
-					BNO055_ACCEL_UNIT, accel_unit_u8, dev_id);
+					BNO055_ACCEL_UNIT, accel_unit_u8);
 					com_rslt +=
 					p_bno055[dev_id]->BNO055_BUS_WRITE_FUNC
 					(p_bno055[dev_id]->dev_addr,
@@ -6644,7 +6644,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8, dev_id);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -6664,8 +6664,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_unit(
-u8 *gyro_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_unit(u8 dev_id, 
+u8 *gyro_unit_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6680,7 +6680,7 @@ u8 *gyro_unit_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the gyro unit */
@@ -6713,7 +6713,7 @@ u8 *gyro_unit_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_unit(u8 gyro_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_unit(u8 dev_id, u8 gyro_unit_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -6726,11 +6726,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8, dev_id);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the gyro unit */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -6759,7 +6759,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8, dev_id);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -6779,8 +6779,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_euler_unit(
-u8 *euler_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_euler_unit(u8 dev_id, 
+u8 *euler_unit_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6795,7 +6795,7 @@ u8 *euler_unit_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the Euler unit */
@@ -6829,7 +6829,7 @@ u8 *euler_unit_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_euler_unit(u8 euler_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_euler_unit(u8 dev_id, u8 euler_unit_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -6842,11 +6842,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8, dev_id);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG, dev_id);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the Euler unit*/
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -6875,7 +6875,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8, dev_id);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -6895,8 +6895,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_tilt_unit(
-u8 *tilt_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_tilt_unit(u8 dev_id, 
+u8 *tilt_unit_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -6911,7 +6911,7 @@ u8 *tilt_unit_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -6947,7 +6947,7 @@ u8 *tilt_unit_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_tilt_unit(u8 tilt_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_tilt_unit(u8 dev_id, u8 tilt_unit_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -6960,11 +6960,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8, dev_id);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
 				(p_bno055[dev_id]->dev_addr,
@@ -6992,7 +6992,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -7011,8 +7011,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_temp_unit(
-u8 *temp_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_temp_unit(u8 dev_id, 
+u8 *temp_unit_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7027,7 +7027,7 @@ u8 *temp_unit_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the temperature unit */
@@ -7061,8 +7061,8 @@ u8 *temp_unit_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_temp_unit(
-u8 temp_unit_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_temp_unit(u8 dev_id, 
+u8 temp_unit_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -7075,11 +7075,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8, dev_id);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG, dev_id);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the temperature unit */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -7109,7 +7109,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -7128,8 +7128,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_data_output_format(
-u8 *data_output_format_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_data_output_format(u8 dev_id, 
+u8 *data_output_format_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7144,7 +7144,7 @@ u8 *data_output_format_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the data output format */
@@ -7178,8 +7178,8 @@ u8 *data_output_format_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_data_output_format(
-u8 data_output_format_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_data_output_format(u8 dev_id, 
+u8 data_output_format_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -7192,11 +7192,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the data output format */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -7226,7 +7226,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!	@brief This API used to read the operation mode
@@ -7267,8 +7267,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	to configure the various settings of the BNO
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_operation_mode(
-u8 *operation_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_operation_mode(u8 dev_id, 
+u8 *operation_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7283,7 +7283,7 @@ u8 *operation_mode_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of operation mode*/
@@ -7340,7 +7340,7 @@ u8 *operation_mode_u8, u8 dev_id)
  *	to configure the various settings of the BNO
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_operation_mode(u8 operation_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_operation_mode(u8 dev_id, u8 operation_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -7353,7 +7353,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* If the previous operation mode is config it is
 				directly write the operation mode */
@@ -7393,6 +7393,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 					BNO055_OPERATION_MODE,
 					BNO055_OPERATION_MODE_CONFIG);
 					com_rslt += bno055_write_register(
+					dev_id,
 					BNO055_OPERATION_MODE_REG,
 					&data_u8r,
 					BNO055_GEN_READ_WRITE_LENGTH);
@@ -7461,8 +7462,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	refer data sheet 3.4.2
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_power_mode(
-u8 *power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_power_mode(u8 dev_id, 
+u8 *power_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7477,7 +7478,7 @@ u8 *power_mode_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of power mode */
@@ -7521,7 +7522,7 @@ u8 *power_mode_u8, u8 dev_id)
  *	refer data sheet 3.4.2
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_power_mode(u8 power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_power_mode(u8 dev_id, u8 power_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -7534,11 +7535,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG, dev_id);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of power mode */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -7567,7 +7568,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8, dev_id);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -7587,8 +7588,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_rst(
-u8 *intr_rst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_rst(u8 dev_id, 
+u8 *intr_rst_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7603,7 +7604,7 @@ u8 *intr_rst_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of reset interrupt*/
@@ -7636,7 +7637,7 @@ u8 *intr_rst_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_rst(u8 intr_rst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_rst(u8 dev_id, u8 intr_rst_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -7649,7 +7650,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_rst(u8 intr_rst_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Write the value of reset interrupt */
@@ -7689,8 +7690,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_rst(u8 intr_rst_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_clk_src(
-u8 *clk_src_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_clk_src(u8 dev_id, 
+u8 *clk_src_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7705,7 +7706,7 @@ u8 *clk_src_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of clk source */
@@ -7737,7 +7738,7 @@ u8 *clk_src_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_clk_src(u8 clk_src_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_clk_src(u8 dev_id, u8 clk_src_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -7750,7 +7751,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_set_clk_src(u8 clk_src_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Write the value of clk source */
@@ -7791,8 +7792,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_set_clk_src(u8 clk_src_u8, u8 dev_id)
  *
  *	@note It resets the whole system
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_rst(
-u8 *sys_rst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_sys_rst(u8 dev_id, 
+u8 *sys_rst_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7807,7 +7808,7 @@ u8 *sys_rst_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of reset system */
@@ -7841,7 +7842,7 @@ u8 *sys_rst_u8, u8 dev_id)
  *
  *	@note It resets the whole system
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_sys_rst(u8 sys_rst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_sys_rst(u8 dev_id, u8 sys_rst_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -7854,7 +7855,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_set_sys_rst(u8 sys_rst_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Write the value of reset system */
@@ -7895,8 +7896,8 @@ BNO055_RETURN_FUNCTION_TYPE bno055_set_sys_rst(u8 sys_rst_u8, u8 dev_id)
  *
  *	@note It triggers the self test
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest(
-u8 *selftest_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_selftest(u8 dev_id, 
+u8 *selftest_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -7911,7 +7912,7 @@ u8 *selftest_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of self test */
@@ -7947,7 +7948,7 @@ u8 *selftest_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_selftest(u8 selftest_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_selftest(u8 dev_id, u8 selftest_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -7960,11 +7961,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of self test */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -7994,7 +7995,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -8014,8 +8015,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_temp_source(
-u8 *temp_source_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_temp_source(u8 dev_id, 
+u8 *temp_source_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -8030,7 +8031,7 @@ u8 *temp_source_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of temperature source */
@@ -8064,7 +8065,7 @@ u8 *temp_source_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_temp_source(u8 temp_source_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_temp_source(u8 dev_id, u8 temp_source_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -8077,11 +8078,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of temperature source*/
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -8110,7 +8111,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -8146,8 +8147,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	bno055_set_z_remap_sign()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_axis_remap_value(
-u8 *remap_axis_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_axis_remap_value(u8 dev_id, 
+u8 *remap_axis_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -8162,7 +8163,7 @@ u8 *remap_axis_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of axis remap*/
@@ -8212,8 +8213,8 @@ u8 *remap_axis_u8, u8 dev_id)
  *	bno055_set_z_remap_sign()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_axis_remap_value(
-u8 remap_axis_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_axis_remap_value(u8 dev_id, 
+u8 remap_axis_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -8226,11 +8227,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			/* Write the value of axis remap */
 		if (stat_s8 == BNO055_SUCCESS) {
 			switch (remap_axis_u8) {
@@ -8290,7 +8291,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode
 	of previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -8309,8 +8310,8 @@ return com_rslt;
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_remap_x_sign(
-u8 *remap_x_sign_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_remap_x_sign(u8 dev_id, 
+u8 *remap_x_sign_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -8325,7 +8326,7 @@ u8 *remap_x_sign_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of x-axis remap sign */
@@ -8358,8 +8359,8 @@ u8 *remap_x_sign_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_remap_x_sign(
-u8 remap_x_sign_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_remap_x_sign(u8 dev_id, 
+u8 remap_x_sign_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -8372,11 +8373,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of x-axis remap */
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -8407,7 +8408,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -8426,8 +8427,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_remap_y_sign(
-u8 *remap_y_sign_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_remap_y_sign(u8 dev_id, 
+u8 *remap_y_sign_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -8442,7 +8443,7 @@ u8 *remap_y_sign_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of y-axis remap sign*/
@@ -8475,8 +8476,8 @@ u8 *remap_y_sign_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_remap_y_sign(
-u8 remap_y_sign_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_remap_y_sign(u8 dev_id, 
+u8 remap_y_sign_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -8489,11 +8490,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of y-axis remap sign*/
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -8523,7 +8524,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -8542,8 +8543,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_remap_z_sign(
-u8 *remap_z_sign_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_remap_z_sign(u8 dev_id, 
+u8 *remap_z_sign_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -8558,7 +8559,7 @@ u8 *remap_z_sign_u8, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read the value of z-axis remap sign*/
@@ -8591,8 +8592,8 @@ u8 *remap_z_sign_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_remap_z_sign(
-u8 remap_z_sign_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_remap_z_sign(u8 dev_id, 
+u8 remap_z_sign_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -8605,11 +8606,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of z-axis remap sign*/
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -8639,7 +8640,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -8667,8 +8668,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *	@note : Each soft iron calibration matrix range from -32768 to +32767
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_sic_matrix(
-struct bno055_sic_matrix_t  *sic_matrix, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_sic_matrix(u8 dev_id, 
+struct bno055_sic_matrix_t  *sic_matrix)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -8712,7 +8713,7 @@ struct bno055_sic_matrix_t  *sic_matrix, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read soft iron calibration matrix value
@@ -8881,8 +8882,8 @@ struct bno055_sic_matrix_t  *sic_matrix, u8 dev_id)
  *
  *	@note : Each soft iron calibration matrix range from -32768 to +32767
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_write_sic_matrix(
-struct bno055_sic_matrix_t  *sic_matrix, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_write_sic_matrix(u8 dev_id, 
+struct bno055_sic_matrix_t  *sic_matrix)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data1_u8r = BNO055_INIT_VALUE;
@@ -8896,11 +8897,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 				if (stat_s8 == BNO055_SUCCESS) {
 					/* write soft iron calibration
 					matrix zero value*/
@@ -9335,7 +9336,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -9369,8 +9370,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	accel G range can be configured by using the
  *	bno055_set_accel_range() API
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_offset(
-struct bno055_accel_offset_t  *accel_offset, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_accel_offset(u8 dev_id, 
+struct bno055_accel_offset_t  *accel_offset)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -9396,7 +9397,7 @@ struct bno055_accel_offset_t  *accel_offset, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read accel offset value it is six bytes of data*/
@@ -9514,8 +9515,8 @@ struct bno055_accel_offset_t  *accel_offset, u8 dev_id)
  *	accel G range can be configured by using the
  *	bno055_set_accel_range() API
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_write_accel_offset(
-struct bno055_accel_offset_t  *accel_offset, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_write_accel_offset(u8 dev_id, 
+struct bno055_accel_offset_t  *accel_offset)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data1_u8r = BNO055_INIT_VALUE;
@@ -9529,11 +9530,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 				if (stat_s8 == BNO055_SUCCESS) {
 					/* write accel offset x value*/
 					com_rslt =
@@ -9728,7 +9729,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 
@@ -9753,8 +9754,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	@note  The range of the magnetometer offset is +/-6400 in LSB
  */
 
-BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_offset(
-struct bno055_mag_offset_t  *mag_offset, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_mag_offset(u8 dev_id, 
+struct bno055_mag_offset_t  *mag_offset)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -9780,7 +9781,7 @@ struct bno055_mag_offset_t  *mag_offset, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read mag offset value it the six bytes of data */
@@ -9890,8 +9891,8 @@ struct bno055_mag_offset_t  *mag_offset, u8 dev_id)
  *
  *	@note  The range of the magnetometer offset is +/-6400 in LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_write_mag_offset(
-struct bno055_mag_offset_t *mag_offset, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_write_mag_offset(u8 dev_id, 
+struct bno055_mag_offset_t *mag_offset)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data1_u8r = BNO055_INIT_VALUE;
@@ -9905,11 +9906,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-		stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+		stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 		if (stat_s8 == BNO055_SUCCESS) {
 			if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 				if (stat_s8 == BNO055_SUCCESS) {
 					/* write Mag offset x value*/
 					com_rslt =
@@ -10104,7 +10105,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -10138,8 +10139,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	Gyro range can be configured by using the
  *	bno055_set_gyro_range() API
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_offset(
-struct bno055_gyro_offset_t  *gyro_offset, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_read_gyro_offset(u8 dev_id, 
+struct bno055_gyro_offset_t  *gyro_offset)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -10165,7 +10166,7 @@ struct bno055_gyro_offset_t  *gyro_offset, u8 dev_id)
 		available in the page zero*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ZERO)
 			/* Write the page zero*/
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ZERO, dev_id);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ZERO);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ZERO)) {
 			/* Read gyro offset value it the six bytes of data*/
@@ -10255,8 +10256,8 @@ struct bno055_gyro_offset_t  *gyro_offset, u8 dev_id)
  *	Gyro range can be configured by using the
  *	bno055_set_gyro_range() API
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_write_gyro_offset(
-struct bno055_gyro_offset_t  *gyro_offset, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_write_gyro_offset(u8 dev_id, 
+struct bno055_gyro_offset_t  *gyro_offset)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data1_u8r = BNO055_INIT_VALUE;
@@ -10270,11 +10271,11 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 		mode is in config mode, this part of code is checking the
 		current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 				stat_s8 += bno055_set_operation_mode
-				(BNO055_OPERATION_MODE_CONFIG);
+				(dev_id, BNO055_OPERATION_MODE_CONFIG);
 				if (stat_s8 == BNO055_SUCCESS) {
 					/* write gryo offset x value*/
 					com_rslt =
@@ -10423,7 +10424,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /********************************************************/
@@ -10447,8 +10448,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_range(
-u8 *accel_range_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_range(u8 dev_id, 
+u8 *accel_range_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -10463,7 +10464,7 @@ u8 *accel_range_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel g range */
@@ -10499,8 +10500,8 @@ u8 *accel_range_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_range(
-u8 accel_range_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_range(u8 dev_id, 
+u8 accel_range_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -10514,14 +10515,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				if (accel_range_u8 < BNO055_ACCEL_RANGE) {
 					/* Write the value of accel range*/
@@ -10560,7 +10561,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -10586,8 +10587,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_bw(
-u8 *accel_bw_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_bw(u8 dev_id, 
+u8 *accel_bw_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -10602,7 +10603,7 @@ u8 *accel_bw_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel bandwidth */
@@ -10642,8 +10643,8 @@ u8 *accel_bw_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_bw(
-u8 accel_bw_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_bw(u8 dev_id, 
+u8 accel_bw_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -10657,14 +10658,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				if (accel_bw_u8 <
 				BNO055_ACCEL_GYRO_BW_RANGE) {
@@ -10703,7 +10704,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -10726,8 +10727,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_power_mode(
-u8 *accel_power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_power_mode(u8 dev_id, 
+u8 *accel_power_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -10742,7 +10743,7 @@ u8 *accel_power_mode_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel bandwidth */
@@ -10779,8 +10780,8 @@ u8 *accel_power_mode_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_power_mode(
-u8 accel_power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_power_mode(u8 dev_id, 
+u8 accel_power_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -10794,14 +10795,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8  = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8  = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				if (accel_power_mode_u8 <
 				BNO055_ACCEL_POWER_MODE_RANGE) {
@@ -10841,7 +10842,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -10867,8 +10868,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_data_output_rate(
-u8 *mag_data_output_rate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_data_output_rate(u8 dev_id, 
+u8 *mag_data_output_rate_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -10883,7 +10884,7 @@ u8 *mag_data_output_rate_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the mag output data rate*/
@@ -10923,8 +10924,8 @@ u8 *mag_data_output_rate_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_data_output_rate(
-u8 mag_data_output_rate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_data_output_rate(u8 dev_id, 
+u8 mag_data_output_rate_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -10938,14 +10939,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 	if (stat_s8 == BNO055_SUCCESS) {
 		/* Write page as one */
-		pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if (pg_stat_s8 == BNO055_SUCCESS) {
 			if (mag_data_output_rate_u8
 				< BNO055_MAG_OUTPUT_RANGE) {
@@ -10985,7 +10986,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11007,8 +11008,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_operation_mode(
-u8 *mag_operation_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_operation_mode(u8 dev_id, 
+u8 *mag_operation_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11023,7 +11024,7 @@ u8 *mag_operation_mode_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of mag operation mode*/
@@ -11059,8 +11060,8 @@ u8 *mag_operation_mode_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_operation_mode(
-u8 mag_operation_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_operation_mode(u8 dev_id, 
+u8 mag_operation_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11074,14 +11075,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				if (mag_operation_mode_u8
 					< BNO055_MAG_OPR_MODE_RANGE) {
@@ -11122,7 +11123,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11144,8 +11145,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_power_mode(
-u8 *mag_power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_power_mode(u8 dev_id, 
+u8 *mag_power_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11160,7 +11161,7 @@ u8 *mag_power_mode_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of mag power mode */
@@ -11196,8 +11197,8 @@ u8 *mag_power_mode_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_power_mode(
-u8 mag_power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_power_mode(u8 dev_id, 
+u8 mag_power_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11211,14 +11212,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
-		stat_s8 += bno055_set_operation_mode(
+		stat_s8 += bno055_set_operation_mode(dev_id, 
 		BNO055_OPERATION_MODE_CONFIG);
 	if (stat_s8 == BNO055_SUCCESS) {
 		/* Write page as one */
-		pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if (pg_stat_s8 == BNO055_SUCCESS) {
 			if (mag_power_mode_u8 <
 			BNO055_MAG_POWER_MODE_RANGE) {
@@ -11257,7 +11258,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11280,8 +11281,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_range(
-u8 *gyro_range_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_range(u8 dev_id, 
+u8 *gyro_range_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11296,7 +11297,7 @@ u8 *gyro_range_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro range */
@@ -11333,8 +11334,8 @@ u8 *gyro_range_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_range(
-u8 gyro_range_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_range(u8 dev_id, 
+u8 gyro_range_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11348,14 +11349,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				if (gyro_range_u8 < BNO055_GYRO_RANGE) {
 					/* Write the value of gyro range*/
@@ -11394,7 +11395,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11420,8 +11421,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_bw(
-u8 *gyro_bw_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_bw(u8 dev_id, 
+u8 *gyro_bw_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11436,7 +11437,7 @@ u8 *gyro_bw_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -11475,8 +11476,8 @@ u8 *gyro_bw_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_bw(
-u8 gyro_bw_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_bw(u8 dev_id, 
+u8 gyro_bw_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11492,14 +11493,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 	if (stat_s8 == BNO055_SUCCESS) {
 		/* Write page as one */
-		pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 	if (pg_stat_s8 == BNO055_SUCCESS) {
 		/* Write the value of gyro bandwidth */
 		if ((gyro_bw_u8 == BNO055_INIT_VALUE ||
@@ -11549,17 +11550,17 @@ if (stat_s8 == BNO055_SUCCESS) {
 				&data_u8r, BNO055_GEN_READ_WRITE_LENGTH);
 			}
 			com_rslt = bno055_get_gyro_power_mode
-			(&gyro_opmode);
+			(dev_id, &gyro_opmode);
 			if (com_rslt == BNO055_SUCCESS) {
 				if (gyro_opmode ==
 				BNO055_GYRO_POWER_MODE_ADVANCE_POWERSAVE) {
 					com_rslt +=
 					bno055_get_gyro_auto_sleep_durn
-					(&gyro_auto_sleep_durn);
+					(dev_id, &gyro_auto_sleep_durn);
 					if (com_rslt == BNO055_SUCCESS) {
 						com_rslt +=
 						bno055_gyro_set_auto_sleep_durn
-						(gyro_auto_sleep_durn,
+						(dev_id, gyro_auto_sleep_durn,
 						gyro_bw_u8);
 					}
 				}
@@ -11581,7 +11582,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11604,8 +11605,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_power_mode(
-u8 *gyro_power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_power_mode(u8 dev_id, 
+u8 *gyro_power_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11620,7 +11621,7 @@ u8 *gyro_power_mode_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Write the value of gyro power mode*/
@@ -11657,8 +11658,8 @@ u8 *gyro_power_mode_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_power_mode(
-u8 gyro_power_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_power_mode(u8 dev_id, 
+u8 gyro_power_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11674,14 +11675,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 	if (stat_s8 == BNO055_SUCCESS) {
 		/* Write page as one */
-		pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if (pg_stat_s8 == BNO055_SUCCESS) {
 			/* Write the value of power mode*/
 			if ((gyro_power_mode_u8 == BNO055_INIT_VALUE ||
@@ -11706,15 +11707,15 @@ if (stat_s8 == BNO055_SUCCESS) {
 				break;
 				case BNO055_GYRO_POWER_MODE_ADVANCE_POWERSAVE:
 				com_rslt = bno055_get_gyro_bw
-				(&gyro_bw_u8);
+				(dev_id, &gyro_bw_u8);
 				com_rslt += bno055_get_gyro_auto_sleep_durn
-				(&gyro_auto_sleep_durn);
+				(dev_id, &gyro_auto_sleep_durn);
 				if (com_rslt == BNO055_SUCCESS)
 					bno055_gyro_set_auto_sleep_durn
-					(gyro_auto_sleep_durn,
+					(dev_id, gyro_auto_sleep_durn,
 					gyro_bw_u8);
 				com_rslt +=
-				bno055_write_page_id(BNO055_PAGE_ONE);
+				bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 				gyro_power_mode_u8 =
 				BNO055_GYRO_POWER_MODE_ADVANCE_POWERSAVE;
 				break;
@@ -11756,7 +11757,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11776,8 +11777,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_sleep_tmr_mode(
-u8 *sleep_tmr_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_sleep_tmr_mode(u8 dev_id, 
+u8 *sleep_tmr_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11792,7 +11793,7 @@ u8 *sleep_tmr_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* read the value of accel sleep mode */
@@ -11826,8 +11827,8 @@ u8 *sleep_tmr_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_sleep_tmr_mode(
-u8 sleep_tmr_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_sleep_tmr_mode(u8 dev_id, 
+u8 sleep_tmr_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11841,14 +11842,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					if (sleep_tmr_u8 <
@@ -11890,7 +11891,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -11919,8 +11920,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_sleep_durn(
-u8 *sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_sleep_durn(u8 dev_id, 
+u8 *sleep_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -11935,7 +11936,7 @@ u8 *sleep_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel sleep duration */
@@ -11978,8 +11979,8 @@ u8 *sleep_durn_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_sleep_durn(
-u8 sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_sleep_durn(u8 dev_id, 
+u8 sleep_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -11993,14 +11994,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					if (sleep_durn_u8 <
@@ -12042,7 +12043,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -12057,7 +12058,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_sleep_durn(u8 *sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_sleep_durn(u8 dev_id, u8 *sleep_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12072,7 +12073,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_sleep_durn(u8 *sleep_durn_u8, u8 dev
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the gyro sleep duration */
@@ -12101,7 +12102,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_sleep_durn(u8 *sleep_durn_u8, u8 dev
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_sleep_durn(u8 sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_sleep_durn(u8 dev_id, u8 sleep_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -12115,14 +12116,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				if (sleep_durn_u8 <
 				BNO055_GYRO_AUTO_SLEEP_DURATION_RANGE) {
@@ -12163,7 +12164,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -12178,8 +12179,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_auto_sleep_durn(
-u8 *auto_sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_auto_sleep_durn(u8 dev_id, 
+u8 *auto_sleep_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12194,7 +12195,7 @@ u8 *auto_sleep_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro auto sleep duration */
@@ -12224,8 +12225,8 @@ u8 *auto_sleep_durn_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_gyro_set_auto_sleep_durn(
-u8 auto_sleep_durn_u8, u8 bw, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_gyro_set_auto_sleep_durn(u8 dev_id, 
+u8 auto_sleep_durn_u8, u8 bw)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -12240,14 +12241,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 	if (stat_s8 == BNO055_SUCCESS) {
 		/* Write page as one */
-		pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if (pg_stat_s8 == BNO055_SUCCESS) {
 			/* Write the value of gyro sleep duration */
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -12368,7 +12369,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -12383,8 +12384,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_sleep_mode(
-u8 *sleep_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_sleep_mode(u8 dev_id, 
+u8 *sleep_mode_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12399,7 +12400,7 @@ u8 *sleep_mode_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of mag sleep mode*/
@@ -12429,8 +12430,8 @@ u8 *sleep_mode_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_sleep_mode(
-u8 sleep_mode_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_sleep_mode(u8 dev_id, 
+u8 sleep_mode_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -12444,14 +12445,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					com_rslt =
@@ -12488,7 +12489,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -12503,8 +12504,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_sleep_durn(
-u8 *sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_mag_sleep_durn(u8 dev_id, 
+u8 *sleep_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12519,7 +12520,7 @@ u8 *sleep_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of mag sleep duration*/
@@ -12548,8 +12549,8 @@ u8 *sleep_durn_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_sleep_durn(
-u8 sleep_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_mag_sleep_durn(u8 dev_id, 
+u8 sleep_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -12563,14 +12564,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					com_rslt =
@@ -12607,7 +12608,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -12646,8 +12647,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	bno055_set_gyro_any_motion_awake_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_gyro_any_motion(
-u8 *gyro_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_gyro_any_motion(u8 dev_id, 
+u8 *gyro_any_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12662,7 +12663,7 @@ u8 *gyro_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro anymotion interrupt mask*/
@@ -12715,8 +12716,8 @@ u8 *gyro_any_motion_u8, u8 dev_id)
  *	bno055_set_gyro_any_motion_awake_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_gyro_any_motion(
-u8 gyro_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_gyro_any_motion(u8 dev_id, 
+u8 gyro_any_motion_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -12729,7 +12730,7 @@ u8 gyro_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Write the value of gyro anymotion interrupt mask*/
@@ -12805,8 +12806,8 @@ u8 gyro_any_motion_u8, u8 dev_id)
  *	bno055_set_gyro_highrate_z_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_gyro_highrate(
-u8 *gyro_highrate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_gyro_highrate(u8 dev_id, 
+u8 *gyro_highrate_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12821,7 +12822,7 @@ u8 *gyro_highrate_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate interrupt mask*/
@@ -12889,8 +12890,8 @@ u8 *gyro_highrate_u8, u8 dev_id)
  *	bno055_set_gyro_highrate_z_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_gyro_highrate(
-u8 gyro_highrate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_gyro_highrate(u8 dev_id, 
+u8 gyro_highrate_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -12903,7 +12904,7 @@ u8 gyro_highrate_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -12960,8 +12961,8 @@ u8 gyro_highrate_u8, u8 dev_id)
  *	bno055_set_accel_high_g_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_accel_high_g(
-u8 *accel_high_g_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_accel_high_g(u8 dev_id, 
+u8 *accel_high_g_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -12976,7 +12977,7 @@ u8 *accel_high_g_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel highg interrupt mask*/
@@ -13024,8 +13025,8 @@ u8 *accel_high_g_u8, u8 dev_id)
  *	bno055_set_accel_high_g_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_accel_high_g(
-u8 accel_high_g_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_accel_high_g(u8 dev_id, 
+u8 accel_high_g_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -13038,7 +13039,7 @@ u8 accel_high_g_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -13095,8 +13096,8 @@ u8 accel_high_g_u8, u8 dev_id)
  *	bno055_set_accel_high_g_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_accel_any_motion(
-u8 *accel_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_accel_any_motion(u8 dev_id, 
+u8 *accel_any_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13111,7 +13112,7 @@ u8 *accel_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* The value of accel anymotion interrupt mask*/
@@ -13158,8 +13159,8 @@ u8 *accel_any_motion_u8, u8 dev_id)
  *	bno055_set_accel_any_motion_thres()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_accel_any_motion(
-u8 accel_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_accel_any_motion(u8 dev_id, 
+u8 accel_any_motion_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -13172,7 +13173,7 @@ u8 accel_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Write the value of accel anymotion interrupt mask*/
@@ -13226,8 +13227,8 @@ u8 accel_any_motion_u8, u8 dev_id)
  *	bno055_set_accel_any_motion_thres())
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_accel_no_motion(
-u8 *accel_nomotion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_mask_accel_no_motion(u8 dev_id, 
+u8 *accel_nomotion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13242,7 +13243,7 @@ u8 *accel_nomotion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel nomotion interrupt mask*/
@@ -13293,8 +13294,8 @@ u8 *accel_nomotion_u8, u8 dev_id)
  *	bno055_set_accel_slow_no_motion_enable()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_accel_no_motion(
-u8 accel_nomotion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_mask_accel_no_motion(u8 dev_id, 
+u8 accel_nomotion_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -13308,7 +13309,7 @@ u8 accel_nomotion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -13369,8 +13370,8 @@ u8 accel_nomotion_u8, u8 dev_id)
  *
  *	bno055_set_gyro_any_motion_awake_durn()
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_gyro_any_motion(
-u8 *gyro_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_gyro_any_motion(u8 dev_id, 
+u8 *gyro_any_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13385,7 +13386,7 @@ u8 *gyro_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro anymotion interrupt */
@@ -13437,8 +13438,8 @@ u8 *gyro_any_motion_u8, u8 dev_id)
  *
  *	bno055_set_gyro_any_motion_awake_durn()
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_gyro_any_motion(
-u8 gyro_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_gyro_any_motion(u8 dev_id, 
+u8 gyro_any_motion_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -13451,7 +13452,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	available in the page one*/
 	if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 		/* Write page as one */
-		stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 	if ((stat_s8 == BNO055_SUCCESS) ||
 	(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 		/* Write the value of gyro anymotion interrupt */
@@ -13527,8 +13528,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *	bno055_set_gyro_highrate_z_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_gyro_highrate(
-u8 *gyro_highrate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_gyro_highrate(u8 dev_id, 
+u8 *gyro_highrate_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13543,7 +13544,7 @@ u8 *gyro_highrate_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate interrupt */
@@ -13611,8 +13612,8 @@ u8 *gyro_highrate_u8, u8 dev_id)
  *	bno055_set_gyro_highrate_z_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_gyro_highrate(
-u8 gyro_highrate_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_gyro_highrate(u8 dev_id, 
+u8 gyro_highrate_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -13625,7 +13626,7 @@ u8 gyro_highrate_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -13680,8 +13681,8 @@ u8 gyro_highrate_u8, u8 dev_id)
  *	bno055_set_accel_high_g_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_accel_high_g(
-u8 *accel_high_g_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_accel_high_g(u8 dev_id, 
+u8 *accel_high_g_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13696,7 +13697,7 @@ u8 *accel_high_g_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel highg interrupt*/
@@ -13744,8 +13745,8 @@ u8 *accel_high_g_u8, u8 dev_id)
  *	bno055_set_accel_high_g_durn()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_accel_high_g(
-u8 accel_high_g_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_accel_high_g(u8 dev_id, 
+u8 accel_high_g_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -13758,7 +13759,7 @@ u8 accel_high_g_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -13813,8 +13814,8 @@ u8 accel_high_g_u8, u8 dev_id)
  *	bno055_set_accel_any_motion_thres()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_accel_any_motion(
-u8 *accel_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_accel_any_motion(u8 dev_id, 
+u8 *accel_any_motion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13829,7 +13830,7 @@ u8 *accel_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel anymotion interrupt */
@@ -13876,8 +13877,8 @@ u8 *accel_any_motion_u8, u8 dev_id)
  *	bno055_set_accel_any_motion_thres()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_accel_any_motion(
-u8 accel_any_motion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_accel_any_motion(u8 dev_id, 
+u8 accel_any_motion_u8)
 {
 	BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 	u8 data_u8r = BNO055_INIT_VALUE;
@@ -13890,7 +13891,7 @@ u8 accel_any_motion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Write the value of accel anymotion interrupt */
@@ -13949,8 +13950,8 @@ u8 accel_any_motion_u8, u8 dev_id)
  *	bno055_set_accel_slow_no_motion_enable()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_accel_no_motion(
-u8 *accel_nomotion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_intr_accel_no_motion(u8 dev_id, 
+u8 *accel_nomotion_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -13965,7 +13966,7 @@ u8 *accel_nomotion_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel nomotion interrupt*/
@@ -14016,8 +14017,8 @@ u8 *accel_nomotion_u8, u8 dev_id)
  *	bno055_set_accel_slow_no_motion_enable()
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_accel_no_motion(
-u8 accel_nomotion_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_intr_accel_no_motion(u8 dev_id, 
+u8 accel_nomotion_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14031,7 +14032,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	available in the page one*/
 	if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 		/* Write page as one */
-		stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
@@ -14080,8 +14081,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *     16g       |    31.25mg    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_any_motion_thres(
-u8 *accel_any_motion_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_any_motion_thres(u8 dev_id, 
+u8 *accel_any_motion_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -14096,7 +14097,7 @@ u8 *accel_any_motion_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel any motion threshold */
@@ -14139,8 +14140,8 @@ u8 *accel_any_motion_thres_u8, u8 dev_id)
  *     16g       |    31.25mg    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_any_motion_thres(
-u8 accel_any_motion_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_any_motion_thres(u8 dev_id, 
+u8 accel_any_motion_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14154,14 +14155,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
 				(p_bno055[dev_id]->dev_addr,
@@ -14195,7 +14196,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -14214,8 +14215,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_any_motion_durn(
-u8 *accel_any_motion_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_any_motion_durn(u8 dev_id, 
+u8 *accel_any_motion_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -14230,7 +14231,7 @@ u8 *accel_any_motion_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel anymotion duration */
@@ -14264,8 +14265,8 @@ u8 *accel_any_motion_durn_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_any_motion_durn(
-u8 accel_any_motion_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_any_motion_durn(u8 dev_id, 
+u8 accel_any_motion_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14279,14 +14280,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
 				(p_bno055[dev_id]->dev_addr,
@@ -14320,7 +14321,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -14345,8 +14346,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_any_motion_no_motion_axis_enable(
-u8 channel_u8, u8 *data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_any_motion_no_motion_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 *data_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -14361,7 +14362,7 @@ u8 channel_u8, u8 *data_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			switch (channel_u8) {
@@ -14427,8 +14428,8 @@ u8 channel_u8, u8 *data_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_any_motion_no_motion_axis_enable(
-u8 channel_u8, u8 data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_any_motion_no_motion_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 data_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14442,14 +14443,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				switch (channel_u8) {
 				case BNO055_ACCEL_ANY_MOTION_NO_MOTION_X_AXIS:
@@ -14530,7 +14531,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -14555,8 +14556,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_high_g_axis_enable(
-u8 channel_u8, u8 *data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_high_g_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 *data_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -14571,7 +14572,7 @@ u8 channel_u8, u8 *data_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			switch (channel_u8) {
@@ -14637,8 +14638,8 @@ u8 channel_u8, u8 *data_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_high_g_axis_enable(
-u8 channel_u8, u8 data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_high_g_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 data_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14652,14 +14653,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				switch (channel_u8) {
 				case BNO055_ACCEL_HIGH_G_X_AXIS:
@@ -14739,7 +14740,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -14758,8 +14759,8 @@ return com_rslt;
  *	in a range from 2 ms to 512 ms
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_high_g_durn(
-u8 *accel_high_g_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_high_g_durn(u8 dev_id, 
+u8 *accel_high_g_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -14774,7 +14775,7 @@ u8 *accel_high_g_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel highg duration*/
@@ -14807,8 +14808,8 @@ u8 *accel_high_g_durn_u8, u8 dev_id)
  *	in a range from 2 ms to 512 ms
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_high_g_durn(
-u8 accel_high_g_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_high_g_durn(u8 dev_id, 
+u8 accel_high_g_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14822,15 +14823,15 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					com_rslt =
@@ -14867,7 +14868,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -14891,8 +14892,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE) {
  *     16g       |    62.5mg     |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_high_g_thres(
-u8 *accel_high_g_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_high_g_thres(u8 dev_id, 
+u8 *accel_high_g_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -14907,7 +14908,7 @@ u8 *accel_high_g_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of highg threshold */
@@ -14945,8 +14946,8 @@ u8 *accel_high_g_thres_u8, u8 dev_id)
  *     16g       |    62.5mg     |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_high_g_thres(
-u8 accel_high_g_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_high_g_thres(u8 dev_id, 
+u8 accel_high_g_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -14960,14 +14961,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					com_rslt =
@@ -15004,7 +15005,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -15028,8 +15029,8 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
  *     8g        |    15.63mg    |   1LSB
  *     16g       |    31.25mg    |   1LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_slow_no_motion_thres(
-u8 *accel_slow_no_motion_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_slow_no_motion_thres(u8 dev_id, 
+u8 *accel_slow_no_motion_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -15044,7 +15045,7 @@ u8 *accel_slow_no_motion_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of slownomotion threshold */
@@ -15082,8 +15083,8 @@ u8 *accel_slow_no_motion_thres_u8, u8 dev_id)
  *     8g        |    15.63mg    |   1LSB
  *     16g       |    31.25mg    |   1LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_slow_no_motion_thres(
-u8 accel_slow_no_motion_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_slow_no_motion_thres(u8 dev_id, 
+u8 accel_slow_no_motion_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -15097,14 +15098,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				slownomotion threshold */
@@ -15138,7 +15139,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -15156,8 +15157,8 @@ return com_rslt;
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_slow_no_motion_enable(
-u8 *accel_slow_no_motion_en_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_slow_no_motion_enable(u8 dev_id, 
+u8 *accel_slow_no_motion_en_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -15172,7 +15173,7 @@ u8 *accel_slow_no_motion_en_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of accel slownomotion enable */
@@ -15204,8 +15205,8 @@ u8 *accel_slow_no_motion_en_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_slow_no_motion_enable(
-u8 accel_slow_no_motion_en_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_slow_no_motion_enable(u8 dev_id, 
+u8 accel_slow_no_motion_en_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -15219,14 +15220,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
 				(p_bno055[dev_id]->dev_addr,
@@ -15260,7 +15261,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -15275,8 +15276,8 @@ return com_rslt;
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_slow_no_motion_durn(
-u8 *accel_slow_no_motion_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_accel_slow_no_motion_durn(u8 dev_id, 
+u8 *accel_slow_no_motion_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -15291,7 +15292,7 @@ u8 *accel_slow_no_motion_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/*read value of accel slownomotion duration*/
@@ -15320,8 +15321,8 @@ u8 *accel_slow_no_motion_durn_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_slow_no_motion_durn(
-u8 accel_slow_no_motion_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_accel_slow_no_motion_durn(u8 dev_id, 
+u8 accel_slow_no_motion_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -15335,14 +15336,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				com_rslt = p_bno055[dev_id]->BNO055_BUS_READ_FUNC
 				(p_bno055[dev_id]->dev_addr,
@@ -15377,7 +15378,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -15403,8 +15404,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_axis_enable(
-u8 channel_u8, u8 *data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 *data_u8)
 {
 /* Variable used to return value of
 communication routine*/
@@ -15419,7 +15420,7 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 	available in the page one*/
 	if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 		/* Write page as one */
-		stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 	if ((stat_s8 == BNO055_SUCCESS) ||
 	(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 		switch (channel_u8) {
@@ -15485,8 +15486,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_axis_enable(
-u8 channel_u8, u8  data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_axis_enable(u8 dev_id, 
+u8 channel_u8, u8  data_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -15500,14 +15501,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 	if (stat_s8 == BNO055_SUCCESS) {
 		/* Write page as one */
-		pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+		pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if (pg_stat_s8 == BNO055_SUCCESS) {
 			switch (channel_u8) {
 			case BNO055_GYRO_ANY_MOTION_X_AXIS:
@@ -15587,7 +15588,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -15613,8 +15614,8 @@ return com_rslt;
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_axis_enable(
-u8 channel_u8, u8 *data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 *data_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -15629,7 +15630,7 @@ u8 channel_u8, u8 *data_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			switch (channel_u8) {
@@ -15695,8 +15696,8 @@ u8 channel_u8, u8 *data_u8, u8 dev_id)
  *
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_axis_enable(
-u8 channel_u8, u8 data_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_axis_enable(u8 dev_id, 
+u8 channel_u8, u8 data_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -15710,14 +15711,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				switch (channel_u8) {
 				case BNO055_GYRO_HIGHRATE_X_AXIS:
@@ -15797,7 +15798,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -15815,8 +15816,8 @@ return com_rslt;
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_filter(
-u8 *gyro_any_motion_filter_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_filter(u8 dev_id, 
+u8 *gyro_any_motion_filter_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -15831,7 +15832,7 @@ u8 *gyro_any_motion_filter_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro anymotion filter*/
@@ -15863,8 +15864,8 @@ u8 *gyro_any_motion_filter_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_filter(
-u8 gyro_any_motion_filter_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_filter(u8 dev_id, 
+u8 gyro_any_motion_filter_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -15878,14 +15879,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				gyro anymotion filter*/
@@ -15919,7 +15920,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -15937,8 +15938,8 @@ return com_rslt;
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_filter(
-u8 *gyro_highrate_filter_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_filter(u8 dev_id, 
+u8 *gyro_highrate_filter_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -15953,7 +15954,7 @@ u8 *gyro_highrate_filter_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate filter */
@@ -15985,8 +15986,8 @@ u8 *gyro_highrate_filter_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_filter(
-u8 gyro_highrate_filter_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_filter(u8 dev_id, 
+u8 gyro_highrate_filter_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16000,14 +16001,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				gyro highrate filter*/
@@ -16043,7 +16044,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -16067,8 +16068,8 @@ return com_rslt;
  *     125            |    7.8125dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_x_thres(
-u8 *gyro_highrate_x_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_x_thres(u8 dev_id, 
+u8 *gyro_highrate_x_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16083,7 +16084,7 @@ u8 *gyro_highrate_x_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate threshold*/
@@ -16121,8 +16122,8 @@ u8 *gyro_highrate_x_thres_u8, u8 dev_id)
  *     125            |    7.8125dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_x_thres(
-u8 gyro_highrate_x_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_x_thres(u8 dev_id, 
+u8 gyro_highrate_x_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16136,14 +16137,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				gyro highrate x threshold*/
@@ -16177,7 +16178,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -16203,8 +16204,8 @@ return com_rslt;
  *     500            |    15.56dps     |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_x_hyst(
-u8 *gyro_highrate_x_hyst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_x_hyst(u8 dev_id, 
+u8 *gyro_highrate_x_hyst_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16219,7 +16220,7 @@ u8 *gyro_highrate_x_hyst_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate x hysteresis*/
@@ -16259,8 +16260,8 @@ u8 *gyro_highrate_x_hyst_u8, u8 dev_id)
  *     500            |    15.56dps     |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_x_hyst(
-u8 gyro_highrate_x_hyst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_x_hyst(u8 dev_id, 
+u8 gyro_highrate_x_hyst_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16274,14 +16275,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/*Write the value of
 				gyro highrate x hysteresis*/
@@ -16315,7 +16316,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -16333,8 +16334,8 @@ return com_rslt;
  *	(1 + gyro_highrate_x_durn_u8)*2.5ms
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_x_durn(
-u8 *gyro_highrate_x_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_x_durn(u8 dev_id, 
+u8 *gyro_highrate_x_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16349,7 +16350,7 @@ u8 *gyro_highrate_x_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate x duration*/
@@ -16380,8 +16381,8 @@ u8 *gyro_highrate_x_durn_u8, u8 dev_id)
  *
  *	(1 + gyro_highrate_x_durn_u8)*2.5ms
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_x_durn(
-u8 gyro_highrate_x_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_x_durn(u8 dev_id, 
+u8 gyro_highrate_x_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16395,14 +16396,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value
 				of gyro highrate x duration*/
@@ -16437,7 +16438,7 @@ if (stat_s8 == BNO055_SUCCESS) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -16461,8 +16462,8 @@ if (stat_s8 == BNO055_SUCCESS) {
  *     125            |    7.8125dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_y_thres(
-u8 *gyro_highrate_y_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_y_thres(u8 dev_id, 
+u8 *gyro_highrate_y_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16477,7 +16478,7 @@ u8 *gyro_highrate_y_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate y threshold*/
@@ -16515,8 +16516,8 @@ u8 *gyro_highrate_y_thres_u8, u8 dev_id)
  *     125            |    7.8125dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_y_thres(
-u8 gyro_highrate_y_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_y_thres(u8 dev_id, 
+u8 gyro_highrate_y_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16530,14 +16531,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value
 				of gyro highrate y threshold*/
@@ -16571,7 +16572,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -16596,8 +16597,8 @@ return com_rslt;
  *     1000           |    31.13dps     |   1LSB
  *     500            |    15.56dps     |   1LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_y_hyst(
-u8 *gyro_highrate_y_hyst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_y_hyst(u8 dev_id, 
+u8 *gyro_highrate_y_hyst_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16612,7 +16613,7 @@ u8 *gyro_highrate_y_hyst_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate y hysteresis*/
@@ -16651,8 +16652,8 @@ u8 *gyro_highrate_y_hyst_u8, u8 dev_id)
  *     1000           |    31.13dps     |   1LSB
  *     500            |    15.56dps     |   1LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_y_hyst(
-u8 gyro_highrate_y_hyst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_y_hyst(u8 dev_id, 
+u8 gyro_highrate_y_hyst_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16666,14 +16667,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				gyro highrate y hysteresis*/
@@ -16707,7 +16708,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -16724,8 +16725,8 @@ return com_rslt;
  *
  *	(1 + gyro_highrate_y_durn_u8)*2.5ms
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_y_durn(
-u8 *gyro_highrate_y_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_y_durn(u8 dev_id, 
+u8 *gyro_highrate_y_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16740,7 +16741,7 @@ u8 *gyro_highrate_y_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate y duration*/
@@ -16771,8 +16772,8 @@ u8 *gyro_highrate_y_durn_u8, u8 dev_id)
  *
  *	(1 + gyro_highrate_y_durn_u8)*2.5ms
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_y_durn(
-u8 gyro_highrate_y_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_y_durn(u8 dev_id, 
+u8 gyro_highrate_y_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16786,15 +16787,15 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value
 				of gyro highrate y duration*/
@@ -16828,7 +16829,7 @@ if (stat_s8 == BNO055_SUCCESS) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -16852,8 +16853,8 @@ if (stat_s8 == BNO055_SUCCESS) {
  *     125            |    7.8125dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_z_thres(
-u8 *gyro_highrate_z_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_z_thres(u8 dev_id, 
+u8 *gyro_highrate_z_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -16868,7 +16869,7 @@ u8 *gyro_highrate_z_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate z threshold*/
@@ -16906,8 +16907,8 @@ u8 *gyro_highrate_z_thres_u8, u8 dev_id)
  *     125            |    7.8125dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_z_thres(
-u8 gyro_highrate_z_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_z_thres(u8 dev_id, 
+u8 gyro_highrate_z_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -16921,14 +16922,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value
 				of gyro highrate z threshold*/
@@ -16962,7 +16963,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -16987,8 +16988,8 @@ return com_rslt;
  *     1000           |    31.13dps     |   1LSB
  *     500            |    15.56dps     |   1LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_z_hyst(
-u8 *gyro_highrate_z_hyst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_z_hyst(u8 dev_id, 
+u8 *gyro_highrate_z_hyst_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -17003,7 +17004,7 @@ u8 *gyro_highrate_z_hyst_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate z hysteresis*/
@@ -17043,8 +17044,8 @@ u8 *gyro_highrate_z_hyst_u8, u8 dev_id)
  *     1000           |    31.13dps     |   1LSB
  *     500            |    15.56dps     |   1LSB
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_z_hyst(
-u8 gyro_highrate_z_hyst_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_z_hyst(u8 dev_id, 
+u8 gyro_highrate_z_hyst_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -17058,14 +17059,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value
 				of gyro highrate z hysteresis*/
@@ -17100,7 +17101,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -17117,8 +17118,8 @@ return com_rslt;
  *
  *	(1 + gyro_highrate_z_durn_u8)*2.5ms
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_z_durn(
-u8 *gyro_highrate_z_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_highrate_z_durn(u8 dev_id, 
+u8 *gyro_highrate_z_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -17133,7 +17134,7 @@ u8 *gyro_highrate_z_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro highrate z duration*/
@@ -17164,8 +17165,8 @@ u8 *gyro_highrate_z_durn_u8, u8 dev_id)
  *
  *	(1 + gyro_highrate_z_durn_u8)*2.5ms
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_z_durn(
-u8 gyro_highrate_z_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_highrate_z_durn(u8 dev_id, 
+u8 gyro_highrate_z_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -17179,14 +17180,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				gyro highrate z duration*/
@@ -17221,7 +17222,7 @@ if (stat_s8 == BNO055_SUCCESS) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -17244,8 +17245,8 @@ if (stat_s8 == BNO055_SUCCESS) {
  *     500            |    0.25dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_thres(
-u8 *gyro_any_motion_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_thres(u8 dev_id, 
+u8 *gyro_any_motion_thres_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -17260,7 +17261,7 @@ u8 *gyro_any_motion_thres_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro anymotion threshold*/
@@ -17297,8 +17298,8 @@ u8 *gyro_any_motion_thres_u8, u8 dev_id)
  *     500            |    0.25dps    |   1LSB
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_thres(
-u8 gyro_any_motion_thres_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_thres(u8 dev_id, 
+u8 gyro_any_motion_thres_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -17312,14 +17313,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value
 				of gyro anymotion threshold*/
@@ -17354,7 +17355,7 @@ if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 	/* set the operation mode of
 	previous operation mode*/
 	com_rslt += bno055_set_operation_mode
-	(prev_opmode_u8);
+	(dev_id, prev_opmode_u8);
 return com_rslt;
 }
 /*!
@@ -17375,8 +17376,8 @@ return com_rslt;
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_slope_samples(
-u8 *gyro_any_motion_slope_samples_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_slope_samples(u8 dev_id, 
+u8 *gyro_any_motion_slope_samples_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -17391,7 +17392,7 @@ u8 *gyro_any_motion_slope_samples_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/*Read the value of gyro anymotion slope samples*/
@@ -17426,8 +17427,8 @@ u8 *gyro_any_motion_slope_samples_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_slope_samples(
-u8 gyro_any_motion_slope_samples_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_slope_samples(u8 dev_id, 
+u8 gyro_any_motion_slope_samples_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -17441,14 +17442,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 /* The write operation effective only if the operation
 mode is in config mode, this part of code is checking the
 current operation mode and set the config mode */
-stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 if (stat_s8 == BNO055_SUCCESS) {
 	if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 		stat_s8 += bno055_set_operation_mode
-		(BNO055_OPERATION_MODE_CONFIG);
+		(dev_id, BNO055_OPERATION_MODE_CONFIG);
 		if (stat_s8 == BNO055_SUCCESS) {
 			/* Write page as one */
-			pg_stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			pg_stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 			if (pg_stat_s8 == BNO055_SUCCESS) {
 				/* Write the value of
 				gyro anymotion slope samples*/
@@ -17482,7 +17483,7 @@ if (stat_s8 == BNO055_SUCCESS) {
 		/* set the operation mode of
 		previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
 /*!
@@ -17496,8 +17497,8 @@ if (stat_s8 == BNO055_SUCCESS) {
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_awake_durn(
-u8 *gyro_awake_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_awake_durn(u8 dev_id, 
+u8 *gyro_awake_durn_u8)
 {
 	/* Variable used to return value of
 	communication routine*/
@@ -17512,7 +17513,7 @@ u8 *gyro_awake_durn_u8, u8 dev_id)
 		available in the page one*/
 		if (p_bno055[dev_id]->page_id != BNO055_PAGE_ONE)
 			/* Write page as one */
-			stat_s8 = bno055_write_page_id(BNO055_PAGE_ONE);
+			stat_s8 = bno055_write_page_id(dev_id, BNO055_PAGE_ONE);
 		if ((stat_s8 == BNO055_SUCCESS) ||
 		(p_bno055[dev_id]->page_id == BNO055_PAGE_ONE)) {
 			/* Read the value of gyro anymotion awake duration*/
@@ -17539,8 +17540,8 @@ u8 *gyro_awake_durn_u8, u8 dev_id)
  *	@retval 1 -> BNO055_ERROR
  *
  */
-BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_awake_durn(
-u8 gyro_awake_durn_u8, u8 dev_id)
+BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_awake_durn(u8 dev_id, 
+u8 gyro_awake_durn_u8)
 {
 BNO055_RETURN_FUNCTION_TYPE com_rslt = BNO055_ERROR;
 u8 data_u8r = BNO055_INIT_VALUE;
@@ -17554,14 +17555,14 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 	/* The write operation effective only if the operation
 	mode is in config mode, this part of code is checking the
 	current operation mode and set the config mode */
-	stat_s8 = bno055_get_operation_mode(&prev_opmode_u8);
+	stat_s8 = bno055_get_operation_mode(dev_id, &prev_opmode_u8);
 	if (stat_s8 == BNO055_SUCCESS) {
 		if (prev_opmode_u8 != BNO055_OPERATION_MODE_CONFIG)
 			stat_s8 += bno055_set_operation_mode
-			(BNO055_OPERATION_MODE_CONFIG);
+			(dev_id, BNO055_OPERATION_MODE_CONFIG);
 			if (stat_s8 == BNO055_SUCCESS) {
 				/* Write page as one */
-				pg_stat_s8 = bno055_write_page_id(
+				pg_stat_s8 = bno055_write_page_id(dev_id, 
 					BNO055_PAGE_ONE);
 				if (pg_stat_s8 == BNO055_SUCCESS) {
 					/* Write the value of gyro
@@ -17598,6 +17599,6 @@ if (p_bno055[dev_id] == BNO055_INIT_VALUE)  {
 		/* set the operation mode
 		of previous operation mode*/
 		com_rslt += bno055_set_operation_mode
-		(prev_opmode_u8, dev_id);
+		(dev_id, prev_opmode_u8);
 	return com_rslt;
 }
