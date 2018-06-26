@@ -97,7 +97,7 @@ BNO055_RETURN_FUNCTION_TYPE bno055_init(u8 dev_id, struct bno055_t *bno055)
 	u8 a_SW_ID_u8[BNO055_REV_ID_SIZE] = {
 	BNO055_INIT_VALUE, BNO055_INIT_VALUE};
 	/* stuct parameters are assign to bno055*/
-	if(p_bno055[dev_id] == BNO055_INIT_VALUE){
+	if(p_bno055[dev_id] != BNO055_INIT_VALUE){
 		return BNO055_ERROR;
 	}
 	else {
